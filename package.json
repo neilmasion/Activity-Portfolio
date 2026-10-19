@@ -1,0 +1,15 @@
+{
+  "name": "neil-masion-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio of Neil Masion - Front-End Developer & UI Engineer",
+  "scripts": {
+    "dev": "concurrently -n \"FRONTEND,BACKEND\" -c \"magenta,cyan\" \"npm --prefix Frontend run dev\" \"npm --prefix Backend run dev\"",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "dev:backend": "npm --prefix Backend run dev",
+    "build": "npm --prefix Frontend run build",
+    "start": "npm --prefix Backend start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
