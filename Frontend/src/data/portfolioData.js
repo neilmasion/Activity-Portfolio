@@ -2,17 +2,18 @@
 
 export const personalInfo = {
   name: import.meta.env.VITE_DEVELOPER_NAME || "Neil Masion",
-  role: import.meta.env.VITE_DEVELOPER_ROLE || "Front-End Developer & UI Engineer",
-  email: import.meta.env.VITE_CONTACT_EMAIL || "neilmasion.dev@gmail.com",
+  role: import.meta.env.VITE_DEVELOPER_ROLE || "4th-Year BSIT Student • Web Designer & Creative Editor",
+  email: import.meta.env.VITE_CONTACT_EMAIL || "neilmasion2@gmail.com",
   location: import.meta.env.VITE_LOCATION || "Cebu, Philippines",
   coordinates: import.meta.env.VITE_COORDINATES || "10.3157° N, 123.8854° E",
-  status: "AVAILABLE FOR FREELANCE & FULL-TIME",
-  bioHeadline: "Good code starts from scratch to the core with IMPACT.",
-  bioDescription: "Front-end developer focused on modern web interfaces, responsive layouts, and clean code for real people.",
-  corePhilosophy: "I connect the dots between what a product needs to do and what its users need to feel. No bloat. Just a polished experience.",
+  status: "OPEN FOR COMMISSIONS • WEB DESIGN, GRAPHICS & VIDEO EDITING",
+  bioHeadline: "4th-Year BSIT Student, Aspiring Full-Stack Developer & Creative.",
+  bioDescription: "A 4th-year BSIT student with a strong passion for design and development. Currently active as an AWS SBG Multimedia Graphics member and former IT Council Media Officer, while accepting commissions for web design, graphic design, and video editing as I work toward becoming a full-stack developer.",
+  corePhilosophy: "When I take on a project, I don't just deliver it — I make sure it stands out. I believe every detail matters, and I put the same care into every project whether it's a website, a poster, or a video edit.",
   github: import.meta.env.VITE_GITHUB_URL || "https://github.com/neilmasion",
-  linkedin: import.meta.env.VITE_LINKEDIN_URL || "https://linkedin.com/in/neilmasion",
-  twitter: import.meta.env.VITE_TWITTER_URL || "https://twitter.com/neilmasion",
+  linkedin: import.meta.env.VITE_LINKEDIN_URL || "https://www.linkedin.com/in/neil-masion-24bb282b3/",
+  twitter: import.meta.env.VITE_TWITTER_URL || "https://x.com/neil4masion",
+  x: import.meta.env.VITE_TWITTER_URL || "https://x.com/neil4masion",
 };
 
 export const projects = [
@@ -28,8 +29,12 @@ export const projects = [
     cardBg: "#EAE7DF",
     textColor: "#1A1A1A",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=80"
+    ],
     description: "A tailored editorial experience designed for a boutique fashion studio. Features custom cursor interactions, silky-smooth horizontal image carousels, responsive grid transitions, and sub-second asset hydration.",
-    metrics: ["99 Lighthouse Performance", "<0.6s LCP", "100% Fluid Responsive"],
     githubUrl: "https://github.com/neilmasion/focalio-studio",
     liveUrl: "https://focalio-studio-preview.vercel.app"
   },
@@ -45,8 +50,12 @@ export const projects = [
     cardBg: "#2A3620",
     textColor: "#ECFCCB",
     image: "graphic-portal",
+    images: [
+      "graphic-portal",
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80"
+    ],
     description: "An interactive incubator dashboard enabling creative teams to prototype 3D web concepts in real-time. Built with interactive canvas widgets, dark-mode first aesthetic, and instant state persistence.",
-    metrics: ["60 FPS Smooth Canvas", "Zero Layout Shift", "Instant Reactive State"],
     githubUrl: "https://github.com/neilmasion/design-to-preview",
     liveUrl: "https://design-to-preview.vercel.app"
   },
@@ -62,8 +71,12 @@ export const projects = [
     cardBg: "#E3DBD1",
     textColor: "#262320",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80"
+    ],
     description: "Minimalist architectural showcase emphasizing spatial harmony, typography hierarchy, and light interaction. Clean responsive layout with bespoke imagery scaling on scroll.",
-    metrics: ["100/100 Best Practices", "Accessible WCAG AAA", "Dynamic Viewport Sizing"],
     githubUrl: "https://github.com/neilmasion/form-and-function",
     liveUrl: "https://form-function-arch.vercel.app"
   },
@@ -79,8 +92,12 @@ export const projects = [
     cardBg: "#E75626",
     textColor: "#FFFFFF",
     image: "graphic-circles",
+    images: [
+      "graphic-circles",
+      "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
+    ],
     description: "A high-octane personal finance visualizer breaking away from generic banking interfaces. Bold color blocking, kinetic geometric portals, and instant cryptographic data streaming.",
-    metrics: ["Sub-50ms Transaction Latency", "End-to-end Encrypted", "Vibrant Theme Switcher"],
     githubUrl: "https://github.com/neilmasion/allin-one-finance",
     liveUrl: "https://allin-one-showcase.vercel.app"
   }
@@ -88,125 +105,117 @@ export const projects = [
 
 export const capabilities = [
   {
-    id: "rapid-builds",
-    title: "Rapid Builds",
-    highlight: "Speed without compromise",
-    description: "From wireframe to high-performing production code in record time. I eliminate red tape and bloated dependencies, delivering lean, accessible interfaces that load instantly on any network.",
-    tags: ["Pixel Perfection", "Clean Code", "High Velocity", "Mobile-First"]
+    id: "web-design",
+    title: "Web Design",
+    highlight: "Clean, responsive & modern web interfaces",
+    description: "I design and build websites that are clean, responsive, and easy to use. Whether it's a landing page, portfolio, or a full site — I focus on making it look good while keeping it functional and user-friendly.",
+    tags: ["Landing Pages", "Portfolio Sites", "Responsive Layouts", "UI/UX"]
   },
   {
-    id: "frontend-arch",
-    title: "Frontend Architecture",
-    highlight: "Built to scale gracefully",
-    description: "Designing modular component libraries, robust state management patterns, and reusable hooks that your entire engineering team can rely on as the application grows.",
-    tags: ["React / Next.js", "TypeScript", "Atomic Design", "Design Systems"]
+    id: "graphic-pubmats",
+    title: "Graphic Design",
+    highlight: "Eye-catching visuals for events & brands",
+    description: "From event posters and publication materials to social media graphics — I create designs that grab attention and communicate clearly. My experience as an AWS SBG Multimedia Graphics member and former IT Council Media Officer gives me solid hands-on practice in visual communication.",
+    tags: ["Posters & Flyers", "Event Graphics", "Publication Materials", "Social Media"]
   },
   {
-    id: "frontend-direction",
-    title: "Frontend Direction",
-    highlight: "Engineering meets art direction",
-    description: "Bridging the gap between Figma artboards and browser execution. Elevating user journeys with purposeful micro-interactions, spring physics, kinetic typography, and fluid page transitions.",
-    tags: ["Framer Motion", "Micro-Interactions", "Fluid Transitions", "Sound & Haptics"]
+    id: "video-production",
+    title: "Video Editing",
+    highlight: "Polished edits that tell a story",
+    description: "Video editing started as a hobby because I enjoyed seeing how clips could come together to tell a story. I turn raw footage into polished, engaging edits with the right pacing, transitions, and feel.",
+    tags: ["Event Recaps", "Highlight Reels", "Cinematic Edits", "Short-Form Content"]
   }
 ];
 
 export const processSteps = [
   {
     step: "01",
-    title: "GET BRIEFED",
-    description: "Deep dive into your business goals, target user personas, and project constraints. Setting crisp performance benchmarks."
+    title: "DISCOVER",
+    deliverable: "Project Plan",
+    description: "We chat about what you need, your goals, and ideas."
   },
   {
     step: "02",
-    title: "PLAN THE SYSTEM",
-    description: "Wireframing the component hierarchy, selecting optimal tooling, and crafting fluid responsive breakpoints."
+    title: "WIREFRAME",
+    deliverable: "Simple Layouts",
+    description: "I map out the structure so everything is easy to use."
   },
   {
     step: "03",
-    title: "BUILD IT",
-    description: "Writing clean, semantic, and maintainable code. Infusing smooth micro-animations and ensuring full keyboard accessibility."
+    title: "DESIGN",
+    deliverable: "Figma UI",
+    description: "I create clean, modern visual designs that match your style."
   },
   {
     step: "04",
-    title: "REVIEW & HAND OFF",
-    description: "Rigorous cross-browser stress testing, Lighthouse audits, automated CI verification, and turnkey deployment."
+    title: "DELIVER",
+    deliverable: "Ready Files",
+    description: "You get the interactive prototype and all ready-to-use files."
   }
 ];
 
 export const skillsCategories = [
   {
-    category: "FRONTEND STACK",
+    category: "FRONTEND",
     skills: [
-      { name: "HTML5", icon: "html", level: "Expert", color: "#E34F26" },
-      { name: "CSS3", icon: "css", level: "Expert", color: "#1572B6" },
-      { name: "JavaScript", icon: "js", level: "Expert", color: "#F7DF1E" },
+      { name: "HTML", icon: "html", level: "Expert", color: "#E34F26" },
+      { name: "CSS", icon: "css", level: "Expert", color: "#1572B6" },
+      { name: "React", icon: "react", level: "Expert", color: "#61DAFB" },
+      { name: "TailwindCSS", icon: "tailwind", level: "Expert", color: "#06B6D4" },
+      { name: "Javascript", icon: "js", level: "Expert", color: "#F7DF1E" },
       { name: "TypeScript", icon: "ts", level: "Advanced", color: "#3178C6" },
-      { name: "React.js", icon: "react", level: "Expert", color: "#61DAFB" },
-      { name: "Tailwind CSS", icon: "tailwind", level: "Expert", color: "#06B6D4" },
       { name: "Next.js", icon: "next", level: "Advanced", color: "#FFFFFF" },
-      { name: "Vite", icon: "vite", level: "Expert", color: "#646CFF" },
-      { name: "Framer Motion", icon: "framer", level: "Advanced", color: "#0055FF" },
-      { name: "Redux / Zustand", icon: "state", level: "Advanced", color: "#764ABC" }
+      { name: "Vite", icon: "vite", level: "Expert", color: "#646CFF" }
     ]
   },
   {
-    category: "BACKEND & RUNTIMES",
+    category: "BACKEND & DATABASE",
     skills: [
       { name: "Node.js", icon: "node", level: "Proficient", color: "#5FA04E" },
       { name: "Express.js", icon: "express", level: "Proficient", color: "#FFFFFF" },
-      { name: "REST APIs", icon: "api", level: "Advanced", color: "#009688" },
-      { name: "GraphQL", icon: "graphql", level: "Intermediate", color: "#E10098" },
-      { name: "Python", icon: "python", level: "Intermediate", color: "#3776AB" }
+      { name: "Python", icon: "python", level: "Intermediate", color: "#3776AB" },
+      { name: "PostgreSQL", icon: "postgres", level: "Proficient", color: "#4169E1" }
     ]
   },
   {
-    category: "DATABASES & CLOUD",
+    category: "VERSION CONTROL",
     skills: [
       { name: "Git", icon: "git", level: "Expert", color: "#F05032" },
       { name: "GitHub", icon: "github", level: "Expert", color: "#FFFFFF" },
-      { name: "PostgreSQL", icon: "postgres", level: "Proficient", color: "#4169E1" },
-      { name: "MongoDB", icon: "mongo", level: "Proficient", color: "#47A248" },
-      { name: "Supabase", icon: "supabase", level: "Advanced", color: "#3FCF8E" },
-      { name: "Firebase", icon: "firebase", level: "Proficient", color: "#FFCA28" },
-      { name: "Vercel", icon: "vercel", level: "Expert", color: "#FFFFFF" }
+      { name: "Vercel", icon: "vercel", level: "Expert", color: "#FFFFFF" },
+      { name: "AWS", icon: "aws", level: "Intermediate", color: "#FF9900" }
     ]
   },
   {
-    category: "DESIGN & TOOLING",
+    category: "DESIGN & VIDEO EDIT TOOLS",
     skills: [
       { name: "Figma", icon: "figma", level: "Advanced", color: "#F24E1E" },
-      { name: "Framer", icon: "framer-design", level: "Advanced", color: "#0055FF" },
+      { name: "Canva", icon: "canva", level: "Expert", color: "#00C4CC" },
       { name: "Photoshop", icon: "ps", level: "Intermediate", color: "#31A8FF" },
-      { name: "Illustrator", icon: "ai", level: "Intermediate", color: "#FF9A00" },
-      { name: "VS Code", icon: "vscode", level: "Expert", color: "#007ACC" },
-      { name: "Postman", icon: "postman", level: "Advanced", color: "#FF6C37" }
+      { name: "CapCut", icon: "capcut", level: "Advanced", color: "#00E5FF" }
     ]
   }
 ];
 
 export const faqs = [
   {
-    question: "Can we start with just a landing page?",
-    answer: "Absolutely! Many high-impact client partnerships begin with a focused, razor-sharp landing page. It gives us a chance to establish the visual language, design system, and technical foundation before expanding into a full multi-page application."
+    question: "What is your current status and background?",
+    answer: "I'm a 4th-year Bachelor of Science in Information Technology (BSIT) student based in Cebu, Philippines. I currently serve as an AWS SBG Multimedia Graphics member, and previously served as an IT Council Media Officer. Over time, I've explored web design, graphic design, and video editing, and my goal is to become a full-stack developer while continuing to accept creative commissions."
   },
   {
-    question: "What tech stack do you prefer to work with?",
-    answer: "My battle-tested core stack is React 19, TypeScript, Tailwind CSS, Next.js or Vite, and Framer Motion. This combo delivers incredible developer velocity, tiny bundle sizes, and world-class 60fps animations. I am also comfortable adapting to your existing codebase."
+    question: "What services do you offer for commissions?",
+    answer: "I offer three main services: Web Design (responsive landing pages, portfolio sites, and UI designs), Graphic Design (publication materials, posters, flyers, and event graphics), and Video Editing (event recaps, highlight reels, and cinematic edits). I focus on delivering clean, polished work that stands out."
   },
   {
-    question: "Can you work with my existing team?",
-    answer: "Yes, 100%. I integrate smoothly into engineering sprints, attend standups, follow strict Git branching workflows, write descriptive PRs, and collaborate closely with product managers, UI/UX designers, and backend engineers."
+    question: "What tools and technologies do you use?",
+    answer: "For web design and development, I work with React, Next.js, TailwindCSS, JavaScript, TypeScript, and Vite. For graphic design, I use Figma, Canva, and Photoshop. For video editing, I use CapCut. I also work with Node.js, Express.js, Python, and PostgreSQL on the backend side."
   },
   {
-    question: "How do we collaborate on a project?",
-    answer: "We typically start with a 30-minute discovery call to align on scope, deliverables, and timelines. We then communicate via Slack/Discord, manage tasks on Linear/Notion/GitHub Projects, and review staging builds on Vercel preview URLs with every commit."
+    question: "Do you have real project experience?",
+    answer: "Yes. I've accepted web design commissions and worked on designs for real clients. Through my current role in AWS SBG Multimedia Graphics and my previous experience as an IT Council Media Officer, I've designed graphics, pubmats, and promotional materials for campus activities, tech events, and student initiatives. Video editing also started as a hobby and grew into delivering dynamic event highlights and recap videos."
   },
   {
-    question: "What is your typical turnaround time?",
-    answer: "A standard landing page or portfolio takes 1–2 weeks from final design approval. More comprehensive web apps or SaaS dashboards typically take 3–6 weeks depending on the number of views and API integrations."
-  },
-  {
-    question: "Do you offer post-launch maintenance?",
-    answer: "Yes! Every build comes with a complimentary 30-day bug warranty. Beyond that, I offer ongoing retainers for feature additions, performance optimization, design system updates, and dependency security audits."
+    question: "How can I reach out for a commission?",
+    answer: "You can click the 'Let's Talk' button on the site or email me directly at neilmasion2@gmail.com. Just share your project idea, timeline, and any references you have in mind. I'll get back to you as soon as I can to discuss the details."
   }
 ];

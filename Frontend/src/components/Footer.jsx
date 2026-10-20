@@ -20,7 +20,7 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
   };
 
   return (
-    <footer id="contact" className="w-full bg-[#08080A] text-white pt-16 pb-12 border-t border-zinc-800/80 relative overflow-hidden">
+    <footer id="contact" className="w-full bg-[#08080A] text-white scroll-mt-16 pt-16 pb-12 border-t border-zinc-800/80 relative overflow-hidden">
       
       {/* Background glow behind text */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-purple/15 rounded-full blur-[120px] pointer-events-none" />
@@ -29,34 +29,34 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
         
         {/* Top Label */}
         <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-brand-purple-light mb-3">
-          <span>// READY TO CREATE SOMETHING EXCEPTIONAL?</span>
+          <span>// READY TO START A PROJECT?</span>
           <span className="w-8 h-[1px] bg-brand-purple/40"></span>
         </div>
 
         {/* Big Anton Callout Headline */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 pb-12 border-b border-zinc-800">
           <div>
-            <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight uppercase leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-purple-300 drop-shadow-sm">
-              GOT A GOOD BUILD?
+            <h2 className="font-anton text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight uppercase leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-purple-300 drop-shadow-sm">
+              NEED A WEBSITE, GRAPHICS, OR VIDEO EDIT?
             </h2>
             <p className="font-sans text-sm sm:text-base text-zinc-400 max-w-xl mt-4 leading-relaxed font-normal">
-              Let's turn your ideas into a high-performance, polished digital experience. Currently open for select freelance contracts and full-time front-end engineering roles.
+              Got an idea you want to bring to life? From initial concepts to polished deliverables, let's collaborate to make your next project truly stand out.
             </p>
           </div>
 
           {/* Action Button & Email Pill */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
             <button
               onClick={onOpenContact}
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-xs uppercase tracking-wider transition-all duration-200 shadow-xl shadow-brand-purple/30 rounded-none hover:-translate-y-1 active:translate-y-0"
+              className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-xs uppercase tracking-wider whitespace-nowrap shrink-0 transition-all duration-200 shadow-sm rounded-none hover:-translate-y-0.5 active:translate-y-0"
             >
-              <span>Let's talk</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <span>LET'S TALK</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
 
             <button
               onClick={copyEmail}
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-200 font-mono text-xs uppercase tracking-wider transition-colors rounded-none"
+              className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-200 font-mono text-xs uppercase tracking-wider whitespace-nowrap shrink-0 transition-colors rounded-none"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-zinc-400" />}
               <span>{copied ? 'COPIED TO CLIPBOARD' : 'COPY EMAIL'}</span>
@@ -65,7 +65,7 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
         </div>
 
         {/* Middle Quick Links & Socials */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16 text-xs font-mono">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-xs font-mono">
           <div>
             <span className="text-zinc-500 uppercase tracking-widest block mb-3">DIRECT INQUIRIES</span>
             <a 
@@ -77,19 +77,13 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
           </div>
 
           <div>
-            <span className="text-zinc-500 uppercase tracking-widest block mb-3">CURRENT LOCATION</span>
-            <span className="text-zinc-300 block">{personalInfo.location}</span>
-            <span className="text-zinc-500 text-[11px] block">{personalInfo.coordinates}</span>
-          </div>
-
-          <div>
             <span className="text-zinc-500 uppercase tracking-widest block mb-3">SOCIAL CONNECTIONS</span>
             <div className="flex items-center gap-3">
               <a
                 href={personalInfo.github}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
+                className="w-8 h-8 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
                 aria-label="GitHub Profile"
               >
                 <TechIcon name="github" className="w-4 h-4" />
@@ -98,19 +92,19 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
                 href={personalInfo.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
+                className="w-8 h-8 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
                 aria-label="LinkedIn Profile"
               >
                 <TechIcon name="linkedin" className="w-4 h-4" />
               </a>
               <a
-                href={personalInfo.twitter}
+                href={personalInfo.x || personalInfo.twitter}
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
-                aria-label="Twitter Profile"
+                className="w-8 h-8 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
+                aria-label="X (Twitter) Profile"
               >
-                <TechIcon name="twitter" className="w-4 h-4" />
+                <TechIcon name="x" className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -131,10 +125,6 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
           <div className="flex items-center gap-2">
             <span className="font-anton text-base text-zinc-300">NM.</span>
             <span>&copy; {new Date().getFullYear()} NEIL MASION. ALL RIGHTS RESERVED.</span>
-          </div>
-
-          <div>
-            DESIGNED &amp; DEVELOPED WITH REACT, TAILWIND &amp; FRAMER MOTION
           </div>
         </div>
 

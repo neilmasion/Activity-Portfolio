@@ -1,7 +1,7 @@
 {
   "name": "neil-masion-portfolio",
   "version": "1.0.0",
-  "description": "Portfolio of Neil Masion - Front-End Developer & UI Engineer",
+  "description": "Portfolio of Neil Masion - 4th-Year BSIT Student, Web Designer & Creative Editor",
   "scripts": {
     "dev": "concurrently -n \"FRONTEND,BACKEND\" -c \"magenta,cyan\" \"npm --prefix Frontend run dev\" \"npm --prefix Backend run dev\"",
     "dev:frontend": "npm --prefix Frontend run dev",

@@ -83,7 +83,7 @@ export const LoadingScreen = ({ onLoadingComplete }) => {
         </div>
 
         {/* Progress Bar Container */}
-        <div className="w-64 md:w-80 h-1 bg-zinc-800 rounded-full overflow-hidden mt-8 relative">
+        <div className="w-64 md:w-80 h-1 bg-zinc-800 rounded-none overflow-hidden mt-8 relative">
           <motion.div
             className="h-full bg-gradient-to-r from-brand-purple to-brand-purple-light"
             style={{ width: `${progress}%` }}

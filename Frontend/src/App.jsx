@@ -5,7 +5,6 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { Hero } from './components/Hero';
 import { Projects } from './components/Projects';
 import { Capabilities } from './components/Capabilities';
-import { CodeMatters } from './components/CodeMatters';
 import { ProcessBanner } from './components/ProcessBanner';
 import { About } from './components/About';
 import { PillarsBanner } from './components/PillarsBanner';
@@ -52,10 +51,7 @@ export function App() {
             {/* What I Do Best / Capabilities */}
             <Capabilities />
 
-            {/* Engineering Standards / Code & UI */}
-            <CodeMatters />
-
-            {/* Workflow Banner: No Magic Just Code */}
+            {/* Section 03: Design Process Banner - No Magic Just Design */}
             <ProcessBanner />
 
             {/* About & Skills Group with "Show More" + Disappearing Fade */}

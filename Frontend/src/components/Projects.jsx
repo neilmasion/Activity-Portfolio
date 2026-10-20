@@ -22,7 +22,7 @@ export const Projects = () => {
     : projects.filter(p => p.category === activeFilter);
 
   return (
-    <section id="projects" className="w-full bg-[#0B0B0E] text-white py-16 md:py-24 border-b border-zinc-800 relative overflow-hidden">
+    <section id="projects" className="w-full bg-[#0B0B0E] text-white scroll-mt-16 py-14 md:py-24 border-b border-zinc-800 relative overflow-hidden">
       
       {/* Ambient background light */}
       <div className="absolute top-1/3 left-0 w-80 h-80 bg-brand-purple/10 rounded-full blur-[120px] pointer-events-none" />
@@ -34,7 +34,7 @@ export const Projects = () => {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 md:mb-14">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-brand-purple-light mb-2">
-              <span>// 01. SELECTED WORKS</span>
+              <span>// 01. SELECTED PROJECTS</span>
               <span className="w-8 h-[1px] bg-brand-purple/40"></span>
             </div>
             <h2 className="font-anton text-4xl sm:text-5xl md:text-6xl tracking-tight uppercase leading-[0.92]">
@@ -58,7 +58,7 @@ export const Projects = () => {
               <button
                 key={filter.value}
                 onClick={() => setActiveFilter(filter.value)}
-                className={`relative px-5 py-2 rounded-full font-mono text-xs uppercase tracking-wider transition-all duration-300 whitespace-nowrap ${
+                className={`relative px-5 py-2 rounded-none font-mono text-xs uppercase tracking-wider transition-all duration-300 whitespace-nowrap ${
                   isActive
                     ? 'bg-brand-purple text-white shadow-lg shadow-brand-purple/30 font-semibold'
                     : 'bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-zinc-800'
@@ -84,7 +84,7 @@ export const Projects = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4 }}
-                className="group relative bg-[#131318] rounded-2xl border border-zinc-800/90 p-5 sm:p-7 flex flex-col justify-between hover:border-zinc-700 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-purple/10 cursor-pointer"
+                className="group relative bg-[#131318] rounded-none border border-zinc-800/90 p-5 sm:p-7 flex flex-col justify-between hover:border-zinc-700 transition-all duration-300 hover:shadow-2xl hover:shadow-brand-purple/10 cursor-pointer"
                 onClick={() => setSelectedProject(project)}
               >
                 {/* Top Row: Number & Category */}
@@ -101,7 +101,7 @@ export const Projects = () => {
 
                 {/* Card Main Inner Container - Styled to match design colors */}
                 <div 
-                  className="rounded-xl overflow-hidden p-5 sm:p-6 mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-transform duration-300 group-hover:-translate-y-1"
+                  className="rounded-none overflow-hidden p-5 sm:p-6 mb-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition-transform duration-300 group-hover:-translate-y-1"
                   style={{ backgroundColor: project.cardBg, color: project.textColor }}
                 >
                   {/* Headline */}
@@ -115,7 +115,7 @@ export const Projects = () => {
                   </div>
 
                   {/* Thumbnail / Graphic */}
-                  <div className="w-full sm:w-44 h-36 rounded-lg overflow-hidden shrink-0 shadow-lg relative">
+                  <div className="w-full sm:w-44 h-36 rounded-none overflow-hidden shrink-0 shadow-lg relative">
                     {project.image.startsWith('http') ? (
                       <img
                         src={project.image}
@@ -140,7 +140,7 @@ export const Projects = () => {
                     <span className="text-[11px] font-mono text-zinc-400 group-hover:text-brand-purple-light transition-colors hidden sm:inline">
                       VIEW PROJECT
                     </span>
-                    <div className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-300 group-hover:bg-brand-purple group-hover:text-white transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <div className="w-7 h-7 rounded-none bg-zinc-800 flex items-center justify-center text-zinc-300 group-hover:bg-brand-purple group-hover:text-white transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
                       <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>
                   </div>

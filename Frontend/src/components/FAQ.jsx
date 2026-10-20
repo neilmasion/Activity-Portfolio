@@ -11,7 +11,7 @@ export const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="w-full bg-[#FFFFFF] text-zinc-900 py-16 md:py-24 border-b border-zinc-200">
+    <section id="faq" className="w-full bg-[#FFFFFF] text-zinc-900 scroll-mt-16 py-14 md:py-24 border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -29,10 +29,10 @@ export const FAQ = () => {
             </h2>
 
             <p className="font-sans text-sm sm:text-base text-zinc-600 leading-relaxed font-normal max-w-md mb-8">
-              Everything you need to know about partnering with me, from project kickoff to technical deployment.
+              Everything you need to know about working with me — from services and tools to how we can get started.
             </p>
 
-            <div className="p-6 rounded-2xl bg-purple-50/70 border border-purple-200/60">
+            <div className="p-6 rounded-none bg-purple-50/70 border border-purple-200/60">
               <span className="font-mono text-xs uppercase font-bold text-brand-purple block mb-2">
                 Have a unique challenge?
               </span>
@@ -55,7 +55,7 @@ export const FAQ = () => {
               return (
                 <div
                   key={idx}
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  className={`rounded-none border transition-all duration-300 overflow-hidden ${
                     isOpen
                       ? 'border-brand-purple/40 bg-[#FAF9FE] shadow-sm'
                       : 'border-zinc-200/90 bg-white hover:border-zinc-300'
@@ -69,7 +69,7 @@ export const FAQ = () => {
                       {faq.question}
                     </span>
 
-                    <div className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center transition-transform duration-200 ${
+                    <div className={`w-8 h-8 rounded-none shrink-0 flex items-center justify-center transition-transform duration-200 ${
                       isOpen ? 'bg-brand-purple text-white rotate-180' : 'bg-zinc-100 text-zinc-700'
                     }`}>
                       {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}

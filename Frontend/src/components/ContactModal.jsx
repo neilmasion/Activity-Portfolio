@@ -8,8 +8,8 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    projectType: 'Web Application',
-    budget: '$3k - $5k',
+    projectType: 'Web Design / Landing Page',
+    budget: 'Standard Commission (₱1.5k - ₱5k)',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -109,60 +109,60 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.25 }}
-          className="relative w-full max-w-xl bg-[#111116] border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl z-10 text-white my-8"
+          className="relative w-full max-w-[460px] bg-[#111116] border border-zinc-800 rounded-none overflow-hidden shadow-2xl z-10 text-white my-6"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-zinc-800 bg-[#16161F]">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800 bg-[#16161F]">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-purple-light">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>START A COLLABORATION</span>
+              <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-brand-purple-light">
+                <Sparkles className="w-3 h-3" />
+                <span>START A PROJECT</span>
               </div>
-              <h3 className="font-anton text-2xl uppercase tracking-wide text-white mt-1">
-                LET'S BUILD SOMETHING GREAT
+              <h3 className="font-anton text-xl uppercase tracking-wide text-white mt-0.5">
+                LET'S CREATE SOMETHING GREAT
               </h3>
             </div>
             <button
               onClick={resetAndClose}
-              className="p-2 rounded-full bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
+              className="p-1.5 rounded-none bg-zinc-800/80 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Body */}
-          <div className="p-6 sm:p-8">
+          <div className="p-5 sm:p-6">
             {submitted ? (
-              <div className="text-center py-8 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-purple-500/20 text-brand-purple-light flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-8 h-8" />
+              <div className="text-center py-6 space-y-3">
+                <div className="w-12 h-12 rounded-none bg-purple-500/20 text-brand-purple-light flex items-center justify-center mx-auto mb-3">
+                  <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h4 className="font-anton text-2xl uppercase text-white">
+                <h4 className="font-anton text-xl uppercase text-white">
                   MESSAGE DISPATCHED!
                 </h4>
-                <p className="font-sans text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                <p className="font-sans text-xs text-zinc-400 max-w-xs mx-auto leading-relaxed">
                   Thank you for reaching out, {formData.name || 'friend'}. I've received your inquiry and will review the details right away.
                 </p>
-                <div className="pt-4">
+                <div className="pt-2">
                   <button
                     onClick={resetAndClose}
-                    className="px-6 py-2.5 rounded-full bg-brand-purple text-white font-mono text-xs uppercase tracking-wider hover:bg-brand-purple-dark transition-colors"
+                    className="px-5 py-2 rounded-none bg-brand-purple text-white font-mono text-xs uppercase tracking-wider hover:bg-brand-purple-dark transition-colors"
                   >
                     CLOSE WINDOW
                   </button>
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
                 {errorMsg && (
-                  <div className="p-3 rounded-xl bg-red-950/40 border border-red-500/40 text-red-300 text-xs font-mono flex items-center gap-2">
+                  <div className="p-2.5 rounded-none bg-red-950/40 border border-red-500/40 text-red-300 text-xs font-mono flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 shrink-0" />
                     <span>{errorMsg}</span>
                   </div>
                 )}
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
                     Your Name *
                   </label>
                   <input
@@ -172,12 +172,12 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="e.g. Alex Rivera"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-sm text-white font-sans transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
                     Email Address *
                   </label>
                   <input
@@ -187,74 +187,76 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="alex@company.com"
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-sm text-white font-sans transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors"
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                      Project Type
+                    <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
+                      Commission / Project Type
                     </label>
                     <select
                       name="projectType"
                       value={formData.projectType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs font-mono text-zinc-300 transition-colors"
+                      className="w-full px-3 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs font-mono text-zinc-300 transition-colors"
                     >
-                      <option value="Web Application">Full Web Application</option>
-                      <option value="Landing Page">Landing Page / Portfolio</option>
-                      <option value="UI/UX Engineering">UI/UX &amp; Design System</option>
-                      <option value="Performance Audit">Performance Optimization</option>
+                      <option value="Web Design / Landing Page">Web Design / Landing Page</option>
+                      <option value="Graphic Design">Graphic Design (Posters, Flyers, Pubmats)</option>
+                      <option value="Video Editing">Video Editing (Recaps, Highlights)</option>
+                      <option value="UI/UX & Portfolio Design">UI/UX &amp; Portfolio Design</option>
+                      <option value="Full Website Development">Full Website Development</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                      Budget Tier
+                    <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
+                      Budget / Rate Tier
                     </label>
                     <select
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs font-mono text-zinc-300 transition-colors"
+                      className="w-full px-3 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs font-mono text-zinc-300 transition-colors"
                     >
-                      <option value="< $2,000">&lt; $2,000</option>
-                      <option value="$2k - $5k">$2,000 - $5,000</option>
-                      <option value="$5k - $10k">$5,000 - $10,000</option>
-                      <option value="$10k+">$10,000+</option>
+                      <option value="Student / Org Friendly (₱500 - ₱1,500)">Student / Org Friendly (₱500 - ₱1,500)</option>
+                      <option value="Standard Commission (₱1,500 - ₱5,000)">Standard Commission (₱1,500 - ₱5,000)</option>
+                      <option value="Major Build / Capstone (₱5,000+)">Major Build / Capstone (₱5,000+)</option>
+                      <option value="Open for Discussion / Flexible">Open for Discussion / Flexible</option>
                     </select>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                    Project Details / Message *
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
+                    Commission Details / Message *
                   </label>
                   <textarea
                     required
                     name="message"
-                    rows={4}
+                    rows={3}
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell me about what you're building, target timeline, and goals..."
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-sm text-white font-sans transition-colors resize-none"
+                    placeholder="Tell me about your project — what you need (website, graphics, or video), your timeline, and any specific ideas or references you have in mind..."
+                    className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors resize-none"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-xs uppercase tracking-wider transition-all shadow-lg shadow-brand-purple/20 disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-none bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-xs uppercase tracking-wider transition-all shadow-lg shadow-brand-purple/20 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
                       <span>DISPATCHING...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4" />
+                      <Send className="w-3.5 h-3.5" />
                       <span>SUBMIT PROPOSAL</span>
                     </>
                   )}

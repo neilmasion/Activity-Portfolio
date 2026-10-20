@@ -7,14 +7,14 @@ export const Navbar = ({ onOpenContact }) => {
 
   const navLinks = [
     { name: 'Projects', href: '#projects' },
+    { name: 'Services', href: '#capabilities' },
     { name: 'About', href: '#skills' },
-    { name: 'Capabilities', href: '#capabilities' },
     { name: 'Stack', href: '#skills' },
     { name: 'FAQ', href: '#faq' },
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200/80 transition-all duration-200">
+    <header className={`sticky top-0 z-40 ${mobileMenuOpen ? 'bg-white' : 'bg-white/95 backdrop-blur-md'} border-b border-zinc-200/80 transition-all duration-200 relative`}>
       {/* Main Navbar Bar - Logo on left, Navlinks and Button grouped on the right */}
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14 py-4 flex items-center justify-between">
         {/* Left: Brand Logo */}
@@ -39,7 +39,7 @@ export const Navbar = ({ onOpenContact }) => {
             ))}
           </nav>
 
-          {/* "Let's talk" Button without border radius */}
+          {/* "Commission" Button without border radius */}
           <button
             onClick={onOpenContact}
             className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-xs uppercase tracking-wider transition-all duration-200 shadow-sm rounded-none hover:-translate-y-0.5 active:translate-y-0"
@@ -53,29 +53,31 @@ export const Navbar = ({ onOpenContact }) => {
         <div className="flex md:hidden items-center">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 rounded-none text-zinc-800 hover:bg-zinc-100 transition-colors"
+            className="p-1.5 bg-transparent border-none text-zinc-900 hover:text-brand-purple focus:outline-none transition-colors"
             aria-label="Toggle Menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer (solid opaque white overlay so hero section is fully hidden behind) */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-zinc-200 bg-white px-6 py-4 space-y-3"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="md:hidden absolute top-full left-0 right-0 z-50 border-b border-zinc-200 bg-white shadow-2xl px-6 py-5 space-y-3.5"
+            style={{ backgroundColor: '#ffffff' }}
           >
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="block font-mono text-xs uppercase tracking-wider text-zinc-700 hover:text-brand-purple py-1.5"
+                className="block font-mono text-xs uppercase tracking-wider text-zinc-700 hover:text-brand-purple py-1.5 transition-colors"
               >
                 {link.name}
               </a>
@@ -86,7 +88,7 @@ export const Navbar = ({ onOpenContact }) => {
                   setMobileMenuOpen(false);
                   onOpenContact();
                 }}
-                className="w-full flex items-center justify-center gap-1.5 py-2.5 bg-brand-purple text-white font-mono text-xs uppercase tracking-wider rounded-none"
+                className="w-full flex items-center justify-center gap-1.5 py-3 bg-brand-purple text-white font-mono text-xs uppercase tracking-wider rounded-none shadow-sm"
               >
                 <span>Let's talk</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />

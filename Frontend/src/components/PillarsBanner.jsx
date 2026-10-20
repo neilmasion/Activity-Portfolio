@@ -3,9 +3,9 @@ import { Sparkles } from 'lucide-react';
 
 export const PillarsBanner = () => {
   const pillars = [
-    { title: "CLARITY OVER CLUTTER.", desc: "Eliminating digital noise to let essential interactions shine." },
-    { title: "CODE FOR REAL PEOPLE.", desc: "Building inclusive, lightning-fast interfaces that anyone can use." },
-    { title: "PURPOSE IN EVERY PIXEL.", desc: "Every animation, margin, and layout choice serves a deliberate goal." },
+    { title: "DESIGN WITH INTENTION.", desc: "Every layout, color, and element is chosen to serve a clear purpose — not just to look good." },
+    { title: "BUILD TO STAND OUT.", desc: "I treat every project like it's my own, making sure the final result is something worth showing off." },
+    { title: "ALWAYS KEEP LEARNING.", desc: "From writing code manually to exploring AI tools, I stay open to new ways of working and growing." },
   ];
 
   return (
