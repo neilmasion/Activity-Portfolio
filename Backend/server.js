@@ -369,6 +369,10 @@ app.delete('/api/admin/messages/:id', requireAdminAuth, async (req, res) => {
  * Protected Admin Test Email Dispatch
  */
 app.post('/api/admin/test-email', requireAdminAuth, async (req, res) => {
+  const rawPass = config.smtp.pass || '';
+  const passLength = String(rawPass).replace(/['"\s]/g, '').length;
+  const user = config.smtp.user || config.adminEmail || 'neilmasion2@gmail.com';
+
   const result = await sendInquiryNotification({
     id: `test_${Date.now()}`,
     name: 'Gmail Test Probe',
@@ -381,7 +385,14 @@ app.post('/api/admin/test-email', requireAdminAuth, async (req, res) => {
 
   return res.json({
     success: result.sent,
-    details: result
+    details: {
+      ...result,
+      diagnostics: {
+        targetEmail: user,
+        passConfigured: passLength > 0,
+        passCharCount: passLength
+      }
+    }
   });
 });
 

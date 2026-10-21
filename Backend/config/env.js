@@ -25,24 +25,51 @@ dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const isProd = NODE_ENV === 'production';
 
+// Helpers to safely clean environment variables passed via CLI, UI, or .env
+const cleanStr = (val, fallback = '') => {
+  if (!val) return fallback;
+  return String(val).trim().replace(/^["']|["']$/g, '');
+};
+
+const cleanSecret = (val, fallback = '') => {
+  if (!val) return fallback;
+  // Strips wrapping and stray quotes and all internal/external whitespace
+  return String(val).replace(/['"\s]/g, '');
+};
+
+const rawSmtpPass = process.env.SMTP_PASS || 
+  process.env.SMTP_PASSWORD || 
+  process.env.GMAIL_APP_PASSWORD || 
+  process.env.GMAIL_PASSWORD || 
+  process.env.MAIL_PASSWORD || 
+  process.env.EMAIL_PASS || 
+  process.env.EMAIL_PASSWORD || '';
+
+const rawSmtpUser = process.env.SMTP_USER || 
+  process.env.SMTP_USERNAME || 
+  process.env.GMAIL_USER || 
+  process.env.EMAIL_USER || 
+  process.env.ADMIN_EMAIL || 
+  'neilmasion2@gmail.com';
+
 export const config = {
   env: NODE_ENV,
   isProd,
   port: parseInt(process.env.PORT || '5000', 10),
-  clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
-  adminEmail: process.env.ADMIN_EMAIL || 'neilmasion2@gmail.com',
+  clientUrl: cleanStr(process.env.CLIENT_URL, 'http://localhost:5173'),
+  adminEmail: cleanSecret(process.env.ADMIN_EMAIL, 'neilmasion2@gmail.com'),
   // Admin credentials for dashboard access (/admin)
-  adminUsername: process.env.ADMIN_USERNAME || 'admin',
-  adminPassword: process.env.ADMIN_PASSWORD || 'admin12345',
+  adminUsername: cleanStr(process.env.ADMIN_USERNAME, 'admin'),
+  adminPassword: cleanStr(process.env.ADMIN_PASSWORD, 'admin12345'),
   // Secret key used for admin authentication - fallback generated if not provided in dev
-  apiSecretKey: process.env.API_SECRET_KEY || (isProd ? '' : 'dev_fallback_secret_key_nm_2026'),
-  adminTokenSecret: process.env.ADMIN_TOKEN_SECRET || process.env.API_SECRET_KEY || 'dev_fallback_secret_key_nm_2026',
+  apiSecretKey: cleanStr(process.env.API_SECRET_KEY, isProd ? '' : 'dev_fallback_secret_key_nm_2026'),
+  adminTokenSecret: cleanStr(process.env.ADMIN_TOKEN_SECRET || process.env.API_SECRET_KEY, 'dev_fallback_secret_key_nm_2026'),
   // Email / SMTP config
   smtp: {
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT || '587', 10),
-    user: process.env.SMTP_USER || '',
-    pass: process.env.SMTP_PASS || ''
+    host: cleanStr(process.env.SMTP_HOST, 'smtp.gmail.com'),
+    port: parseInt(cleanStr(process.env.SMTP_PORT, '465'), 10),
+    user: cleanSecret(rawSmtpUser, 'neilmasion2@gmail.com'),
+    pass: cleanSecret(rawSmtpPass, '')
   },
   // Resource and spend caps (Security #12)
   limits: {

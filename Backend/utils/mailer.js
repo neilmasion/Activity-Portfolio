@@ -5,32 +5,36 @@ import config from '../config/env.js';
  * Creates and validates nodemailer transporter
  */
 function createTransporter() {
-  const host = config.smtp.host || 'smtp.gmail.com';
-  const user = config.smtp.user || config.adminEmail || 'neilmasion2@gmail.com';
-  const pass = config.smtp.pass;
+  const host = (config.smtp.host || 'smtp.gmail.com').trim();
+  const rawUser = config.smtp.user || config.adminEmail || 'neilmasion2@gmail.com';
+  const rawPass = config.smtp.pass || '';
+
+  // Clean away any surrounding or inner quotes and whitespace
+  const user = String(rawUser).replace(/['"\s]/g, '');
+  const pass = String(rawPass).replace(/['"\s]/g, '');
 
   // Check if credentials are placeholders or empty
-  const isPlaceholder = !pass || pass === 'your_app_specific_password' || pass.trim() === '';
+  const isPlaceholder = !pass || pass === 'your_app_specific_password' || pass.length < 8;
 
   if (isPlaceholder) {
     return null;
   }
 
-  const isGmail = host.includes('gmail');
+  const isGmail = host.includes('gmail') || user.endsWith('@gmail.com');
 
   if (isGmail) {
     return nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user,
-        pass: pass.replace(/\s+/g, '') // remove spaces from Gmail app passwords
+        pass
       }
     });
   }
 
   return nodemailer.createTransport({
     host,
-    port: config.smtp.port || 587,
+    port: config.smtp.port || 465,
     secure: config.smtp.port === 465,
     auth: { user, pass }
   });
@@ -42,13 +46,20 @@ function createTransporter() {
  */
 export async function sendInquiryNotification(inquiry) {
   const transporter = createTransporter();
-  const recipient = config.adminEmail || 'neilmasion2@gmail.com';
+  const rawRecipient = config.adminEmail || config.smtp.user || 'neilmasion2@gmail.com';
+  const recipient = String(rawRecipient).replace(/['"\s]/g, '');
+  const senderUser = String(config.smtp.user || recipient).replace(/['"\s]/g, '');
 
   if (!transporter) {
-    console.warn(`[MAIL NOT SENT] SMTP is not configured in Backend/.env. To receive emails in ${recipient}, set SMTP_PASS to your 16-character Gmail App Password.`);
+    const passLen = String(config.smtp.pass || '').replace(/['"\s]/g, '').length;
+    const reason = passLen === 0
+      ? 'SMTP_PASS environment variable is not configured or not loaded on Vercel. Please add SMTP_PASS in Vercel Dashboard and trigger a Redeploy.'
+      : `SMTP_PASS length is invalid (${passLen} characters). Expected 16-character Gmail App Password.`;
+
+    console.warn(`[MAIL NOT SENT] ${reason}`);
     return {
       sent: false,
-      reason: 'SMTP_PASS not configured in Backend/.env. Gmail App Password required.'
+      reason
     };
   }
 
@@ -143,7 +154,7 @@ View in Dashboard: ${config.clientUrl}/admin
 
   try {
     const info = await transporter.sendMail({
-      from: `"${inquiry.name} via Portfolio" <${config.smtp.user || recipient}>`,
+      from: `"${inquiry.name} (Portfolio)" <${senderUser}>`,
       to: recipient,
       replyTo: inquiry.email,
       subject,
@@ -158,9 +169,14 @@ View in Dashboard: ${config.clientUrl}/admin
     };
   } catch (err) {
     console.error(`[EMAIL ERROR] Failed to send email via SMTP to ${recipient}:`, err.message);
+    let errorHelp = err.message;
+    if (err.message && err.message.includes('535')) {
+      errorHelp = 'Google rejected the credentials (535 Bad Credentials). Ensure your 16-character Gmail App Password has no quotes, and redeploy on Vercel so the latest environment variables take effect.';
+    }
     return {
       sent: false,
-      error: err.message
+      error: errorHelp,
+      rawError: err.message
     };
   }
 }

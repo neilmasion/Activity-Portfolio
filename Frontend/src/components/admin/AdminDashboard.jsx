@@ -95,9 +95,16 @@ export const AdminDashboard = ({ token, user, onLogout, onBackToPortfolio }) => 
       if (data.success) {
         setTestEmailStatus({ type: 'success', message: 'Test email successfully sent to neilmasion2@gmail.com!' });
       } else {
+        const diag = data.details?.diagnostics;
+        let errMsg = data.details?.reason || data.details?.error || 'Gmail App Password required in Vercel Environment Variables (SMTP_PASS)';
+        if (diag && !diag.passConfigured) {
+          errMsg = 'SMTP_PASS not found in Vercel environment variables. Please check Vercel Settings and Redeploy.';
+        } else if (diag && diag.passCharCount !== 16) {
+          errMsg = `SMTP_PASS has ${diag.passCharCount} characters (expected 16 chars). Update in Vercel and Redeploy.`;
+        }
         setTestEmailStatus({
           type: 'error',
-          message: data.details?.reason || data.details?.error || 'Gmail App Password required in Backend/.env (SMTP_PASS)'
+          message: errMsg
         });
       }
     } catch {
