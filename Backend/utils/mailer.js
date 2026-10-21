@@ -1,8 +1,18 @@
 import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import config from '../config/env.js';
 
+let resendClient = null;
+function getResendClient() {
+  if (!config.resendApiKey) return null;
+  if (!resendClient) {
+    resendClient = new Resend(config.resendApiKey);
+  }
+  return resendClient;
+}
+
 /**
- * Creates and validates nodemailer transporter
+ * Creates and validates nodemailer transporter (SMTP fallback)
  */
 function createTransporter() {
   const host = (config.smtp.host || 'smtp.gmail.com').trim();
@@ -45,16 +55,17 @@ function createTransporter() {
  * when a client submits an inquiry through the portfolio contact form.
  */
 export async function sendInquiryNotification(inquiry) {
+  const resend = getResendClient();
   const transporter = createTransporter();
   const rawRecipient = config.adminEmail || config.smtp.user || 'neilmasion2@gmail.com';
   const recipient = String(rawRecipient).replace(/['"\s]/g, '');
   const senderUser = String(config.smtp.user || recipient).replace(/['"\s]/g, '');
 
-  if (!transporter) {
+  if (!resend && !transporter) {
     const passLen = String(config.smtp.pass || '').replace(/['"\s]/g, '').length;
-    const reason = passLen === 0
-      ? 'SMTP_PASS environment variable is not configured or not loaded on Vercel. Please add SMTP_PASS in Vercel Dashboard and trigger a Redeploy.'
-      : `SMTP_PASS length is invalid (${passLen} characters). Expected 16-character Gmail App Password.`;
+    const reason = !config.resendApiKey && passLen === 0
+      ? 'Email service not configured. Add RESEND_API_KEY in Vercel Environment Variables.'
+      : `Email credentials invalid. Expected RESEND_API_KEY or 16-char Gmail App Password (got ${passLen} chars).`;
 
     console.warn(`[MAIL NOT SENT] ${reason}`);
     return {
@@ -152,31 +163,84 @@ Reply directly to: ${inquiry.email}
 View in Dashboard: ${config.clientUrl}/admin
   `.trim();
 
-  try {
-    const info = await transporter.sendMail({
-      from: `"${inquiry.name} (Portfolio)" <${senderUser}>`,
-      to: recipient,
-      replyTo: inquiry.email,
-      subject,
-      text: textContent,
-      html: htmlContent
-    });
+  // 1. PRIMARY DISPATCH: RESEND API (HTTP/HTTPS - 100% reliable on Vercel)
+  if (resend) {
+    try {
+      const fromSender = config.resendFrom || 'Portfolio Inquiries <onboarding@resend.dev>';
+      const sendResult = await resend.emails.send({
+        from: fromSender,
+        to: [recipient],
+        replyTo: inquiry.email,
+        subject,
+        text: textContent,
+        html: htmlContent
+      });
 
-    console.log(`[EMAIL DISPATCHED] Successfully sent inquiry from ${inquiry.email} to ${recipient} (Message ID: ${info.messageId})`);
-    return {
-      sent: true,
-      messageId: info.messageId
-    };
-  } catch (err) {
-    console.error(`[EMAIL ERROR] Failed to send email via SMTP to ${recipient}:`, err.message);
-    let errorHelp = err.message;
-    if (err.message && err.message.includes('535')) {
-      errorHelp = 'Google rejected the credentials (535 Bad Credentials). Ensure your 16-character Gmail App Password has no quotes, and redeploy on Vercel so the latest environment variables take effect.';
+      if (sendResult.error) {
+        console.error(`[RESEND ERROR] Failed to dispatch via Resend:`, sendResult.error);
+        // If SMTP is available, fallback to SMTP
+        if (!transporter) {
+          return {
+            sent: false,
+            provider: 'resend',
+            error: sendResult.error.message || 'Resend API failed to dispatch email.'
+          };
+        }
+      } else {
+        console.log(`[EMAIL DISPATCHED via RESEND] Successfully sent inquiry to ${recipient} (ID: ${sendResult.data?.id})`);
+        return {
+          sent: true,
+          provider: 'resend',
+          messageId: sendResult.data?.id
+        };
+      }
+    } catch (err) {
+      console.error(`[RESEND EXCEPTION] Error calling Resend API:`, err.message);
+      if (!transporter) {
+        return {
+          sent: false,
+          provider: 'resend',
+          error: err.message
+        };
+      }
     }
-    return {
-      sent: false,
-      error: errorHelp,
-      rawError: err.message
-    };
   }
+
+  // 2. FALLBACK DISPATCH: SMTP (Nodemailer)
+  if (transporter) {
+    try {
+      const info = await transporter.sendMail({
+        from: `"${inquiry.name} (Portfolio)" <${senderUser}>`,
+        to: recipient,
+        replyTo: inquiry.email,
+        subject,
+        text: textContent,
+        html: htmlContent
+      });
+
+      console.log(`[EMAIL DISPATCHED via SMTP] Successfully sent inquiry from ${inquiry.email} to ${recipient} (Message ID: ${info.messageId})`);
+      return {
+        sent: true,
+        provider: 'smtp',
+        messageId: info.messageId
+      };
+    } catch (err) {
+      console.error(`[EMAIL ERROR via SMTP] Failed to send email to ${recipient}:`, err.message);
+      let errorHelp = err.message;
+      if (err.message && err.message.includes('535')) {
+        errorHelp = 'Google rejected SMTP credentials (535 Bad Credentials). Use RESEND_API_KEY on Vercel instead of SMTP.';
+      }
+      return {
+        sent: false,
+        provider: 'smtp',
+        error: errorHelp,
+        rawError: err.message
+      };
+    }
+  }
+
+  return {
+    sent: false,
+    reason: 'No working email provider configured.'
+  };
 }

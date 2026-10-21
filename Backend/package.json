@@ -18,6 +18,7 @@
     "express": "^4.21.2",
     "express-rate-limit": "^8.7.1",
     "helmet": "^8.3.0",
-    "nodemailer": "^10.1.7"
+    "nodemailer": "^10.1.7",
+    "resend": "^6.34.1"
   }
 }

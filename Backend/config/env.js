@@ -58,6 +58,9 @@ export const config = {
   port: parseInt(process.env.PORT || '5000', 10),
   clientUrl: cleanStr(process.env.CLIENT_URL, 'http://localhost:5173'),
   adminEmail: cleanSecret(process.env.ADMIN_EMAIL, 'neilmasion2@gmail.com'),
+  // Resend API (HTTP email service - 100% reliable on Vercel without SMTP issues)
+  resendApiKey: cleanSecret(process.env.RESEND_API_KEY || process.env.RESEND_KEY, ''),
+  resendFrom: cleanStr(process.env.RESEND_FROM, 'Portfolio Inquiries <onboarding@resend.dev>'),
   // Admin credentials for dashboard access (/admin)
   adminUsername: cleanStr(process.env.ADMIN_USERNAME, 'admin'),
   adminPassword: cleanStr(process.env.ADMIN_PASSWORD, 'admin12345'),

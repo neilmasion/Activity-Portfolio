@@ -93,14 +93,13 @@ export const AdminDashboard = ({ token, user, onLogout, onBackToPortfolio }) => 
       });
       const data = await res.json();
       if (data.success) {
-        setTestEmailStatus({ type: 'success', message: 'Test email successfully sent to neilmasion2@gmail.com!' });
+        const providerName = data.details?.provider === 'resend' ? 'Resend API' : 'SMTP';
+        setTestEmailStatus({ type: 'success', message: `Test email sent to neilmasion2@gmail.com via ${providerName}!` });
       } else {
         const diag = data.details?.diagnostics;
-        let errMsg = data.details?.reason || data.details?.error || 'Gmail App Password required in Vercel Environment Variables (SMTP_PASS)';
-        if (diag && !diag.passConfigured) {
-          errMsg = 'SMTP_PASS not found in Vercel environment variables. Please check Vercel Settings and Redeploy.';
-        } else if (diag && diag.passCharCount !== 16) {
-          errMsg = `SMTP_PASS has ${diag.passCharCount} characters (expected 16 chars). Update in Vercel and Redeploy.`;
+        let errMsg = data.details?.reason || data.details?.error || 'Email notification service error.';
+        if (diag && !diag.hasResendKey && !diag.passConfigured) {
+          errMsg = 'RESEND_API_KEY not found in Vercel. Add RESEND_API_KEY in Vercel Settings and Redeploy.';
         }
         setTestEmailStatus({
           type: 'error',
@@ -146,7 +145,7 @@ export const AdminDashboard = ({ token, user, onLogout, onBackToPortfolio }) => 
               title="Test real-time delivery to neilmasion2@gmail.com"
             >
               <Send className={`w-3 h-3 text-brand-purple ${isTestingEmail ? 'animate-pulse' : ''}`} />
-              <span className="hidden sm:inline">{isTestingEmail ? 'Sending...' : 'Test Gmail'}</span>
+              <span className="hidden sm:inline">{isTestingEmail ? 'Sending...' : 'Test Email'}</span>
             </button>
             <button onClick={() => fetchData(true)} disabled={isRefreshing} className="p-2 bg-[#141418] border border-[#22222B] hover:border-brand-purple/40 text-zinc-400 hover:text-white text-xs transition-all" title="Refresh">
               <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-brand-purple' : ''}`} />
