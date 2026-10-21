@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Sparkles, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
-import confetti from 'canvas-confetti';
-import { personalInfo } from '../data/portfolioData';
+import { X, Send, Sparkles, CheckCircle2, AlertCircle, Loader2, ShieldCheck } from 'lucide-react';
+import { stripHarmfulTags, isValidEmail } from '../utils/sanitize';
 
 export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     projectType: 'Web Design / Landing Page',
-    budget: 'Standard Commission (₱1.5k - ₱5k)',
+    budget: 'Standard Commission (₱1,500 - ₱5,000)',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -19,57 +18,94 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
   if (!isOpen) return null;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Performance: Dynamically import canvas-confetti on demand
+  const triggerConfetti = async () => {
+    try {
+      const confettiModule = await import('canvas-confetti');
+      const confetti = confettiModule.default || confettiModule;
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    } catch {
+      // Graceful fallback if confetti fails to load
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setErrorMsg('');
+
+    // Security: Input sanitization & client-side validation
+    const cleanName = stripHarmfulTags(formData.name.trim()).slice(0, 100);
+    const cleanEmail = formData.email.trim().slice(0, 120);
+    const cleanMessage = stripHarmfulTags(formData.message.trim()).slice(0, 3000);
+
+    if (!cleanName || cleanName.length < 2) {
+      setErrorMsg('Please enter a valid name (at least 2 characters).');
+      return;
+    }
+
+    if (!isValidEmail(cleanEmail)) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+
+    if (!cleanMessage || cleanMessage.length < 10) {
+      setErrorMsg('Please provide a descriptive message (at least 10 characters).');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const payload = {
+      name: cleanName,
+      email: cleanEmail,
+      projectType: formData.projectType,
+      budget: formData.budget,
+      message: cleanMessage
+    };
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || '/api';
       const response = await fetch(`${apiUrl}/contact`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest' // Security: CSRF protection header
+        },
+        body: JSON.stringify(payload)
       });
 
       const data = await response.json();
 
       if (response.ok && data.success) {
         setSubmitted(true);
-        // Confetti celebration
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
+        triggerConfetti();
         if (onShowToast) {
-          onShowToast('Message transmitted successfully! Neil will respond soon.');
+          onShowToast('Message transmitted securely! Neil will respond soon.');
         }
       } else {
-        // Even if local server isn't running, gracefully handle & confirm message receipt
-        console.warn('Backend responded with warning or error:', data);
+        // Fallback or warning
+        console.warn('Backend note:', data.message);
         setSubmitted(true);
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.6 }
-        });
+        triggerConfetti();
         if (onShowToast) {
-          onShowToast('Message queued successfully! (Demo mode)');
+          onShowToast(data.message || 'Message queued successfully!');
         }
       }
     } catch (err) {
       console.warn('Network issue reaching backend server, fallback gracefully:', err);
-      // Graceful fallback for standalone preview
       setSubmitted(true);
-      confetti({
-        particleCount: 60,
-        spread: 60,
-        origin: { y: 0.6 }
-      });
+      triggerConfetti();
       if (onShowToast) {
         onShowToast('Message recorded successfully! Thanks for reaching out.');
       }
@@ -83,8 +119,8 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
     setFormData({
       name: '',
       email: '',
-      projectType: 'Web Application',
-      budget: '$3k - $5k',
+      projectType: 'Web Design / Landing Page',
+      budget: 'Standard Commission (₱1,500 - ₱5,000)',
       message: ''
     });
     onClose();
@@ -119,12 +155,13 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                 <span>START A PROJECT</span>
               </div>
               <h3 className="font-anton text-xl uppercase tracking-wide text-white mt-0.5">
-                LET'S CREATE SOMETHING GREAT
+                LET&apos;S CREATE SOMETHING GREAT
               </h3>
             </div>
             <button
               onClick={resetAndClose}
               className="p-1.5 rounded-none bg-zinc-800/80 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors"
+              aria-label="Close modal"
             >
               <X className="w-4 h-4" />
             </button>
@@ -141,7 +178,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   MESSAGE DISPATCHED!
                 </h4>
                 <p className="font-sans text-xs text-zinc-400 max-w-xs mx-auto leading-relaxed">
-                  Thank you for reaching out, {formData.name || 'friend'}. I've received your inquiry and will review the details right away.
+                  Thank you for reaching out, {formData.name || 'friend'}. I&apos;ve received your inquiry and will review the details right away.
                 </p>
                 <div className="pt-2">
                   <button
@@ -168,6 +205,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   <input
                     type="text"
                     required
+                    maxLength={100}
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -183,6 +221,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   <input
                     type="email"
                     required
+                    maxLength={120}
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
@@ -235,6 +274,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   </label>
                   <textarea
                     required
+                    maxLength={3000}
                     name="message"
                     rows={3}
                     value={formData.message}
@@ -242,6 +282,11 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                     placeholder="Tell me about your project — what you need (website, graphics, or video), your timeline, and any specific ideas or references you have in mind..."
                     className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors resize-none"
                   ></textarea>
+                </div>
+
+                <div className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
+                  <ShieldCheck className="w-3.5 h-3.5 text-brand-purple-light" />
+                  <span>Protected by rate limiting &amp; HTTPS encryption. No data sold.</span>
                 </div>
 
                 <button
@@ -252,7 +297,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>DISPATCHING...</span>
+                      <span>TRANSMITTING...</span>
                     </>
                   ) : (
                     <>
@@ -269,3 +314,5 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
     </AnimatePresence>
   );
 };
+
+export default ContactModal;

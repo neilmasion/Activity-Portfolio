@@ -1,9 +1,9 @@
 import React from 'react';
-import { ArrowUp, ArrowUpRight, Copy, Mail, Check } from 'lucide-react';
+import { ArrowUp, ArrowUpRight, Copy, Check } from 'lucide-react';
 import { TechIcon } from './TechIcons';
 import { personalInfo } from '../data/portfolioData';
 
-export const Footer = ({ onOpenContact, onShowToast }) => {
+export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms }) => {
   const [copied, setCopied] = React.useState(false);
 
   const copyEmail = () => {
@@ -82,7 +82,7 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
               <a
                 href={personalInfo.github}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="w-8 h-8 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
                 aria-label="GitHub Profile"
               >
@@ -91,7 +91,7 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
               <a
                 href={personalInfo.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="w-8 h-8 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
                 aria-label="LinkedIn Profile"
               >
@@ -100,7 +100,7 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
               <a
                 href={personalInfo.x || personalInfo.twitter}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="w-8 h-8 rounded-none bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white hover:border-zinc-700 transition-colors"
                 aria-label="X (Twitter) Profile"
               >
@@ -120,11 +120,27 @@ export const Footer = ({ onOpenContact, onShowToast }) => {
           </div>
         </div>
 
-        {/* Bottom Credits */}
+        {/* Bottom Credits & Legal Links */}
         <div className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
           <div className="flex items-center gap-2">
             <span className="font-anton text-base text-zinc-300">NM.</span>
-            <span>&copy; {new Date().getFullYear()} NEIL MASION. ALL RIGHTS RESERVED.</span>
+            <span>&copy; 2026 NEIL MASION. ALL RIGHTS RESERVED.</span>
+          </div>
+
+          <div className="flex items-center gap-4 text-[11px]">
+            <button
+              onClick={onOpenPrivacy}
+              className="text-zinc-400 hover:text-white transition-colors underline-offset-2 hover:underline"
+            >
+              PRIVACY POLICY
+            </button>
+            <span className="text-zinc-700">•</span>
+            <button
+              onClick={onOpenTerms}
+              className="text-zinc-400 hover:text-white transition-colors underline-offset-2 hover:underline"
+            >
+              TERMS OF SERVICE
+            </button>
           </div>
         </div>
 

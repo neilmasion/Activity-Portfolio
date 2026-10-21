@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronUp, Code } from 'lucide-react';
-import { skillsCategories, personalInfo } from '../data/portfolioData';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { skillsCategories } from '../data/portfolioData';
 import { TechIcon } from './TechIcons';
-import aboutNeilImg from '../assets/about-neil.png';
+import aboutNeilImg from '../assets/about-neil.webp';
 
 export const About = () => {
   const [isStoryExpanded, setIsStoryExpanded] = useState(false);

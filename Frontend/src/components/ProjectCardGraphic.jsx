@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const ProjectGraphic = ({ type }) => {
+export const ProjectGraphic = React.memo(({ type }) => {
   if (type === 'graphic-portal') {
     // Card 02: Modern olive green with neon lime crescent / portal
     return (
@@ -35,4 +35,6 @@ export const ProjectGraphic = ({ type }) => {
   }
 
   return null;
-};
+});
+
+ProjectGraphic.displayName = 'ProjectGraphic';

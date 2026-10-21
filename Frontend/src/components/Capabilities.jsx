@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus, ArrowRight, Zap, Layers, Sparkles } from 'lucide-react';
+import { Plus, Minus, Zap, Layers, Sparkles } from 'lucide-react';
 import { capabilities } from '../data/portfolioData';
 
 export const Capabilities = () => {

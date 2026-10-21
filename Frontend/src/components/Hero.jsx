@@ -66,12 +66,18 @@ export const Hero = ({ onOpenContact }) => {
               className="h-[340px] sm:h-[380px] md:h-[430px] lg:h-[460px] w-auto flex justify-center items-end pointer-events-none"
             >
               <picture className="h-full w-auto flex justify-center items-end">
+                <source media="(max-width: 639px)" srcSet="/assets/hero-developer-mobile.webp" type="image/webp" />
                 <source media="(max-width: 639px)" srcSet="/assets/hero-developer-mobile.png?v=1" />
+                <source srcSet="/assets/hero-developer.webp" type="image/webp" />
                 <img
                   src="/assets/hero-developer.png?v=7"
                   alt="Neil Masion - 4th-Year BSIT Student & Web Designer"
                   className="h-full w-auto object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.18)] select-none pointer-events-none"
                   loading="eager"
+                  fetchPriority="high"
+                  width="460"
+                  height="460"
+                  decoding="async"
                 />
               </picture>
             </motion.div>

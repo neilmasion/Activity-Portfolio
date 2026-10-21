@@ -29,11 +29,11 @@ export const projects = [
     accentColor: "#FA8C54",
     cardBg: "#F7ECE5",
     textColor: "#1A1715",
-    image: "/assets/giya/Shot.png",
+    image: "/assets/giya/Shot.webp",
     images: [
-      "/assets/giya/Shot.png",
-      "/assets/giya/Shot-1.png",
-      "/assets/giya/Shot-2.png"
+      "/assets/giya/Shot.webp",
+      "/assets/giya/Shot-1.webp",
+      "/assets/giya/Shot-2.webp"
     ],
     description: "GIYA (named after the Filipino word for 'Guide') is a mobile companion and caregiver ecosystem designed in Figma for an IoT Smart Cane system. Tailored for caregivers and visually impaired individuals, the interface provides a secure caregiver verification flow (6-digit OTP verification and 4-digit PIN security), live GPS tracking with interactive route mapping, smart cane device telemetry (battery level & firmware status), and instant Physical SOS alerts triggered directly from the cane's emergency hardware button.",
     figmaUrl: "https://www.figma.com/design/X8kgkMKNRJ68hrFIAya2LF/GIYA-Authentication-UI?node-id=0-1&t=RnzyFHbT3CFO3g10-1",
@@ -52,13 +52,13 @@ export const projects = [
     accentColor: "#00C4CC",
     cardBg: "#161329",
     textColor: "#F3F0FF",
-    image: "/assets/it-days/game-exhibition.png",
+    image: "/assets/it-days/game-exhibition.webp",
     images: [
-      "/assets/it-days/game-exhibition.png",
-      "/assets/it-days/infographics-contest.png",
-      "/assets/it-days/program-flow.png",
-      "/assets/it-days/schedule-update.png",
-      "/assets/it-days/it-days-frame.jpg"
+      "/assets/it-days/game-exhibition.webp",
+      "/assets/it-days/infographics-contest.webp",
+      "/assets/it-days/program-flow.webp",
+      "/assets/it-days/schedule-update.webp",
+      "/assets/it-days/it-days-frame.webp"
     ],
     description: "Official visual branding and publication materials created in Canva for Cebu Eastern College's IT Days: Celestial Showcase. Designed during my term as IT Council Media Officer, this suite features high-contrast social announcements including the Game Exhibition feature, the 'All In Spotlight' registration launch, full-day afternoon itinerary timelines, and urgent schedule weather advisories. Built around a cosmic space aesthetic, neon gradients, and clean informational hierarchy to drive student participation.",
     canvaUrl: "https://canva.link/0qd0sayk09j2yw1",
@@ -77,9 +77,9 @@ export const projects = [
     accentColor: "#F59E0B",
     cardBg: "#1C1A17",
     textColor: "#FDE68A",
-    image: "/assets/commissions/pizza-flyer.png",
+    image: "/assets/commissions/pizza-flyer.webp",
     images: [
-      "/assets/commissions/pizza-flyer.png"
+      "/assets/commissions/pizza-flyer.webp"
     ],
     description: "A commissioned promotional flyer designed in Canva for a pizza restaurant client. Features bold typography with a hand-drawn style, high-contrast black and amber color scheme, appetizing food photography, and a clear call-to-action layout including menu highlights, delivery details, and a weekend promo offer. Designed for both print and social media distribution.",
     canvaUrl: "https://canva.link/yp5t80nla80c1o1",
@@ -98,12 +98,12 @@ export const projects = [
     accentColor: "#A855F7",
     cardBg: "#221133",
     textColor: "#F3E8FF",
-    image: "/assets/aws-community-day/event-banner.png",
+    image: "/assets/aws-community-day/event-banner.webp",
     images: [
-      "/assets/aws-community-day/event-banner.png",
-      "/assets/aws-community-day/qr-invite.png",
-      "/assets/aws-community-day/registration-closed.png",
-      "/assets/aws-community-day/teaser-flashlight.png"
+      "/assets/aws-community-day/event-banner.webp",
+      "/assets/aws-community-day/qr-invite.webp",
+      "/assets/aws-community-day/registration-closed.webp",
+      "/assets/aws-community-day/teaser-flashlight.webp"
     ],
     description: "Official promotional graphics and campaign materials designed in Canva for AWS Student Community Day Cebu 2026 held at the University of the Philippines Cebu. Created as a member of AWS SBG Multimedia Graphics, this pubmat series includes the main conference announcement, interactive QR registration invite, registration countdown closures, and flashlight-themed 'Something Exciting Is Coming' teaser graphics. Styled with sleek purple glassmorphism, 3D iridescent elements, and AWS brand compliance.",
     canvaUrl: "https://canva.link/4zfkg8dlg3eb3pu",
@@ -122,9 +122,9 @@ export const projects = [
     accentColor: "#4F46E5",
     cardBg: "#17182E",
     textColor: "#E0E7FF",
-    image: "/assets/todo-app/todo-preview.png",
+    image: "/assets/todo-app/todo-preview.webp",
     images: [
-      "/assets/todo-app/todo-preview.png"
+      "/assets/todo-app/todo-preview.webp"
     ],
     description: "A clean, minimalist ToDo List mobile application UI designed in Figma as an academic activity project during my 3rd year in BSIT. Features a streamlined task management flow with live search, task item categorization with color tagging, deadline tracking, an intuitive calendar view for scheduling, detailed task creation forms, and responsive mobile mockups.",
     figmaUrl: "https://www.figma.com/design/9hBmQn0YRPaFCJTGI48f04/Untitled?node-id=0-1&t=UkfEr6UpPFiPUPGH-1",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -10,12 +10,20 @@ import { About } from './components/About';
 import { PillarsBanner } from './components/PillarsBanner';
 import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
-import { ContactModal } from './components/ContactModal';
 import { Toast } from './components/Toast';
+import { CookieConsent } from './components/CookieConsent';
+import { Analytics } from '@vercel/analytics/react';
+
+// Performance: Code-splitting modals to keep initial bundle ultra-lean
+const ContactModal = lazy(() => import('./components/ContactModal').then(m => ({ default: m.ContactModal })));
+const PrivacyPolicyModal = lazy(() => import('./components/PrivacyPolicyModal').then(m => ({ default: m.PrivacyPolicyModal })));
+const TermsModal = lazy(() => import('./components/TermsModal').then(m => ({ default: m.TermsModal })));
 
 export function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [toast, setToast] = useState({ visible: false, message: '', type: 'success' });
 
   const showToast = (message, type = 'success') => {
@@ -45,7 +53,7 @@ export function App() {
           <main>
             <Hero onOpenContact={() => setIsContactOpen(true)} />
 
-            {/* Featured Projects with Filters */}
+            {/* Featured Projects with Filters & Pagination */}
             <Projects />
 
             {/* What I Do Best / Capabilities */}
@@ -68,14 +76,37 @@ export function App() {
           <Footer
             onOpenContact={() => setIsContactOpen(true)}
             onShowToast={showToast}
+            onOpenPrivacy={() => setIsPrivacyOpen(true)}
+            onOpenTerms={() => setIsTermsOpen(true)}
           />
 
-          {/* Interactive Contact Modal */}
-          <ContactModal
-            isOpen={isContactOpen}
-            onClose={() => setIsContactOpen(false)}
-            onShowToast={showToast}
-          />
+          {/* Cookie Consent Banner */}
+          <CookieConsent onOpenPrivacy={() => setIsPrivacyOpen(true)} />
+
+          {/* Code-split Modals with Suspense */}
+          <Suspense fallback={null}>
+            {isContactOpen && (
+              <ContactModal
+                isOpen={isContactOpen}
+                onClose={() => setIsContactOpen(false)}
+                onShowToast={showToast}
+              />
+            )}
+
+            {isPrivacyOpen && (
+              <PrivacyPolicyModal
+                isOpen={isPrivacyOpen}
+                onClose={() => setIsPrivacyOpen(false)}
+              />
+            )}
+
+            {isTermsOpen && (
+              <TermsModal
+                isOpen={isTermsOpen}
+                onClose={() => setIsTermsOpen(false)}
+              />
+            )}
+          </Suspense>
 
           {/* Toast Notification Container */}
           <Toast
@@ -84,6 +115,9 @@ export function App() {
             type={toast.type}
             onClose={() => setToast((prev) => ({ ...prev, visible: false }))}
           />
+
+          {/* Vercel Web Analytics */}
+          <Analytics />
         </div>
       )}
     </div>

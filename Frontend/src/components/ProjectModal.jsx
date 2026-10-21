@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, Layers, ChevronLeft, ChevronRight } from 'lucide-react';
 import { TechIcon } from './TechIcons';
 import { ProjectGraphic } from './ProjectCardGraphic';
 
 export const ProjectModal = ({ project, onClose }) => {
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
+
   if (!project) return null;
 
   const images = project.images && project.images.length > 0 ? project.images : [project.image];
-  const [activeImgIndex, setActiveImgIndex] = useState(0);
-
-  useEffect(() => {
-    setActiveImgIndex(0);
-  }, [project]);
 
   const nextImg = (e) => {
     e.stopPropagation();

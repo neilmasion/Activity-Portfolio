@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export const LoadingScreen = ({ onLoadingComplete }) => {
   const [progress, setProgress] = useState(0);
-  const [statusIndex, setStatusIndex] = useState(0);
 
   const statuses = [
     "INITIALIZING CORE ASSETS...",
@@ -12,6 +11,9 @@ export const LoadingScreen = ({ onLoadingComplete }) => {
     "READY TO LAUNCH."
   ];
 
+  // Derive status directly during render (prevents cascading re-renders)
+  const statusIndex = progress < 30 ? 0 : progress < 65 ? 1 : progress < 90 ? 2 : 3;
+
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
@@ -19,24 +21,27 @@ export const LoadingScreen = ({ onLoadingComplete }) => {
           clearInterval(timer);
           setTimeout(() => {
             onLoadingComplete();
-          }, 400);
+          }, 150);
           return 100;
         }
-        // Smooth random increment
-        const next = prev + Math.floor(Math.random() * 8) + 3;
+        // Swift smooth increment
+        const next = prev + Math.floor(Math.random() * 14) + 8;
         return next > 100 ? 100 : next;
       });
-    }, 45);
+    }, 18);
 
     return () => clearInterval(timer);
   }, [onLoadingComplete]);
 
   useEffect(() => {
-    if (progress < 30) setStatusIndex(0);
-    else if (progress < 65) setStatusIndex(1);
-    else if (progress < 90) setStatusIndex(2);
-    else setStatusIndex(3);
-  }, [progress]);
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' || e.key === 'Enter') {
+        onLoadingComplete();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onLoadingComplete]);
 
   return (
     <motion.div
@@ -53,7 +58,13 @@ export const LoadingScreen = ({ onLoadingComplete }) => {
           <span className="w-2 h-2 rounded-full bg-brand-purple animate-ping"></span>
           Neil Masion
         </span>
-        <span>Portfolio 2026</span>
+        <button
+          onClick={onLoadingComplete}
+          className="hover:text-white transition-colors underline-offset-2 hover:underline tracking-widest text-[11px]"
+          aria-label="Skip intro animation"
+        >
+          SKIP [ESC] &rarr;
+        </button>
       </div>
 
       {/* Center Stage */}

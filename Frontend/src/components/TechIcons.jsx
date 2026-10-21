@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const TechIcon = ({ name, className = "w-5 h-5" }) => {
+export const TechIcon = React.memo(({ name, className = "w-5 h-5" }) => {
   switch (name) {
     case 'html':
       return (
@@ -187,4 +187,7 @@ export const TechIcon = ({ name, className = "w-5 h-5" }) => {
         </svg>
       );
   }
-};
+});
+
+TechIcon.displayName = 'TechIcon';
+
