@@ -12,7 +12,6 @@ import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 import { CookieConsent } from './components/CookieConsent';
-import { Analytics } from '@vercel/analytics/react';
 
 // Performance: Code-splitting modals to keep initial bundle ultra-lean
 const ContactModal = lazy(() => import('./components/ContactModal').then(m => ({ default: m.ContactModal })));
@@ -116,8 +115,6 @@ export function App() {
             onClose={() => setToast((prev) => ({ ...prev, visible: false }))}
           />
 
-          {/* Vercel Web Analytics */}
-          <Analytics />
         </div>
       )}
     </div>
