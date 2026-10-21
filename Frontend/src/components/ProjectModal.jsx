@@ -66,11 +66,11 @@ export const ProjectModal = ({ project, onClose }) => {
                 transition={{ duration: 0.2 }}
                 className="w-full h-full flex items-center justify-center"
               >
-                {currentImg.startsWith('http') ? (
+                {currentImg.startsWith('http') || currentImg.startsWith('/') ? (
                   <img
                     src={currentImg}
                     alt={`${project.title} - Slide ${activeImgIndex + 1}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain p-2"
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center p-4 sm:p-6">
@@ -128,32 +128,32 @@ export const ProjectModal = ({ project, onClose }) => {
           </div>
 
           {/* Right Side / Bottom on Mobile: Details & Info */}
-          <div className="md:col-span-7 p-4 sm:p-6 flex flex-col justify-between space-y-3 sm:space-y-4 overflow-y-auto">
+          <div className="md:col-span-7 p-4 sm:p-6 flex flex-col justify-between space-y-3 sm:space-y-4 overflow-hidden min-h-0 flex-1">
             {/* Header info */}
-            <div>
+            <div className="shrink-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-anton text-base sm:text-lg text-red-500">{project.id}</span>
                 <span className="text-[10px] font-mono uppercase text-zinc-400 tracking-wider">
                   // {project.subtitle}
                 </span>
               </div>
-              <h3 className="font-anton text-lg sm:text-2xl text-white tracking-wide pr-6 sm:pr-8">
+              <h3 className="font-anton text-lg sm:text-2xl text-white tracking-wide pr-6 sm:pr-8 leading-tight">
                 {project.title}
               </h3>
             </div>
 
-            {/* Description */}
-            <div>
-              <h4 className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-brand-purple-light mb-1">
+            {/* Description - ONLY this section is scrollable */}
+            <div className="flex-1 min-h-0 flex flex-col">
+              <h4 className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-brand-purple-light mb-1 shrink-0">
                 PROJECT OVERVIEW
               </h4>
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
-                {project.description}
-              </p>
+              <div className="overflow-y-auto max-h-24 xs:max-h-28 sm:max-h-36 md:max-h-48 pr-2 text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
+                <p>{project.description}</p>
+              </div>
             </div>
 
             {/* Tech Stack */}
-            <div>
+            <div className="shrink-0">
               <h4 className="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-zinc-400 mb-1 sm:mb-1.5 flex items-center gap-1.5">
                 <Layers className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-brand-purple" />
                 STACK &amp; TECHNOLOGIES
@@ -171,25 +171,49 @@ export const ProjectModal = ({ project, onClose }) => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-2 sm:gap-2.5 pt-3 sm:pt-4 border-t border-zinc-800/80">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-sm"
-              >
-                <span>OPEN DEMO</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all border border-zinc-800"
-              >
-                <TechIcon name="github" className="w-3.5 h-3.5" />
-                <span>CODE</span>
-              </a>
+            <div className="flex items-center gap-2 sm:gap-2.5 pt-3 sm:pt-4 border-t border-zinc-800/80 shrink-0">
+              {project.figmaUrl ? (
+                <a
+                  href={project.figmaUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-[#F24E1E] hover:bg-[#d83c0e] text-white font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-sm font-semibold"
+                >
+                  <span>VIEW IN FIGMA</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              ) : project.canvaUrl ? (
+                <a
+                  href={project.canvaUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-[#00C4CC] hover:bg-[#00a7ad] text-white font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-sm font-semibold"
+                >
+                  <span>VIEW IN CANVA</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              ) : (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-sm"
+                >
+                  <span>OPEN DEMO</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all border border-zinc-800"
+                >
+                  <TechIcon name="github" className="w-3.5 h-3.5" />
+                  <span>GITHUB</span>
+                </a>
+              )}
             </div>
           </div>
         </motion.div>
