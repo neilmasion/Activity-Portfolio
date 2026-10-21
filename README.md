@@ -7,6 +7,7 @@ A modern, responsive, and animated portfolio web application built precisely acc
 ## 🚀 Live Servers
 
 - **Frontend (Vite + React + Tailwind + Framer Motion):** [http://localhost:5173](http://localhost:5173)
+- **Admin Portal & Analytics Dashboard:** [http://localhost:5173/admin](http://localhost:5173/admin)
 - **Backend API (Node.js + Express):** [http://localhost:5000/api](http://localhost:5000/api)
 
 ---
@@ -27,6 +28,12 @@ A modern, responsive, and animated portfolio web application built precisely acc
    - Developer cutout image smoothly scales with subtle zoom on scroll.
 
 4. **Rich Interactivity**:
+   - **Custom Admin Analytics Dashboard (`/admin`)**:
+     - Accessible via `http://localhost:5173/admin` or discrete `ADMIN` button in the footer.
+     - Protected with username & password authentication and HMAC-SHA256 signed session tokens.
+     - **Default Credentials:** Username: `admin` | Password: `admin12345` (customizable in `Backend/.env`).
+     - **Visitor Analytics:** Total views, unique visitors, today's views, 14-day traffic trend chart, device breakdown (Desktop/Mobile/Tablet), top traffic sources/referrers, and live visitor log stream.
+     - **Email / Inquiries Inbox:** Full view of every contact message sent (sender, email, project type, budget, message body, date/time), search filter, read/unread status toggle, and one-click direct email reply.
    - **Real-Time Manila Clock**: Updates live in the navigation bar.
    - **Selected Works**: Category filtering (`ALL PROJECTS`, `WEB APPS`, `CREATIVE & APP`, `INTERACTIVE`) + interactive Project Details Modal with live demos & source code links.
    - **Capabilities**: Interactive accordions for Rapid Builds, Frontend Architecture, and Frontend Direction.

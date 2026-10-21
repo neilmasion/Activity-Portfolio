@@ -94,21 +94,11 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
           onShowToast('Message transmitted securely! Neil will respond soon.');
         }
       } else {
-        // Fallback or warning
-        console.warn('Backend note:', data.message);
-        setSubmitted(true);
-        triggerConfetti();
-        if (onShowToast) {
-          onShowToast(data.message || 'Message queued successfully!');
-        }
+        setErrorMsg(data.message || 'Failed to send message. Please try again.');
       }
     } catch (err) {
-      console.warn('Network issue reaching backend server, fallback gracefully:', err);
-      setSubmitted(true);
-      triggerConfetti();
-      if (onShowToast) {
-        onShowToast('Message recorded successfully! Thanks for reaching out.');
-      }
+      console.error('Contact submission error:', err);
+      setErrorMsg('Unable to connect to backend server. Please verify the server is running on port 5000.');
     } finally {
       setIsSubmitting(false);
     }

@@ -5,9 +5,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load from current working directory or Backend directory
+// Load from current working directory or Backend directory, and support Vercel pulled env files
 dotenv.config();
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env.development.local') });
+dotenv.config({ path: path.resolve(__dirname, '../.env.development.local') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
+dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 
 /**
  * Environment configuration validator & loader
@@ -27,8 +31,12 @@ export const config = {
   port: parseInt(process.env.PORT || '5000', 10),
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
   adminEmail: process.env.ADMIN_EMAIL || 'neilmasion2@gmail.com',
+  // Admin credentials for dashboard access (/admin)
+  adminUsername: process.env.ADMIN_USERNAME || 'admin',
+  adminPassword: process.env.ADMIN_PASSWORD || 'admin12345',
   // Secret key used for admin authentication - fallback generated if not provided in dev
   apiSecretKey: process.env.API_SECRET_KEY || (isProd ? '' : 'dev_fallback_secret_key_nm_2026'),
+  adminTokenSecret: process.env.ADMIN_TOKEN_SECRET || process.env.API_SECRET_KEY || 'dev_fallback_secret_key_nm_2026',
   // Email / SMTP config
   smtp: {
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -40,8 +48,8 @@ export const config = {
   limits: {
     maxBodySize: '10kb',
     rateLimitWindowMs: 15 * 60 * 1000, // 15 minutes
-    rateLimitMaxPublic: 100, // max 100 requests per 15 min per IP
-    rateLimitMaxContact: 5,  // max 5 contact submissions per 15 min per IP
+    rateLimitMaxPublic: 200, // max 200 requests per 15 min per IP
+    rateLimitMaxContact: isProd ? 15 : 100,  // max contact submissions per 15 min per IP
     serverTimeoutMs: 10000   // 10 seconds timeout cap
   }
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import { ArrowUp, ArrowUpRight, Copy, Check } from 'lucide-react';
+import { ArrowUp, ArrowUpRight, Copy, Check, Shield } from 'lucide-react';
 import { TechIcon } from './TechIcons';
 import { personalInfo } from '../data/portfolioData';
 
-export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms }) => {
+export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms, onOpenAdmin }) => {
   const [copied, setCopied] = React.useState(false);
 
   const copyEmail = () => {
@@ -140,6 +140,15 @@ export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms 
               className="text-zinc-400 hover:text-white transition-colors underline-offset-2 hover:underline"
             >
               TERMS OF SERVICE
+            </button>
+            <span className="text-zinc-700">•</span>
+            <button
+              onClick={onOpenAdmin}
+              className="text-zinc-500 hover:text-brand-purple-glow transition-colors underline-offset-2 hover:underline flex items-center gap-1"
+              title="Admin Portal & Analytics"
+            >
+              <Shield className="w-3 h-3 text-brand-purple" />
+              <span>ADMIN</span>
             </button>
           </div>
         </div>

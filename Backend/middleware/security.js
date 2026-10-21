@@ -74,7 +74,9 @@ export function csrfProtection(req, res, next) {
         originHost === config.clientUrl ||
         originHost.endsWith('.vercel.app');
 
-      if (!isAllowedOrigin && !requestedWith) {
+      const hasBearerAuth = req.headers.authorization && req.headers.authorization.startsWith('Bearer ');
+
+      if (!isAllowedOrigin && !requestedWith && !hasBearerAuth) {
         return res.status(403).json({
           success: false,
           error: 'CSRF Forbidden',

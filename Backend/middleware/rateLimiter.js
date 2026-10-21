@@ -33,3 +33,16 @@ export const contactFormLimiter = rateLimit({
     message: 'You have submitted several inquiries recently. Please wait a few minutes before sending another message.'
   }
 });
+
+// Admin Login Rate Limiter: Protects admin credentials against brute-force attacks
+export const adminLoginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // 10 attempts per 15 min per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: 'Too Many Login Attempts',
+    message: 'Too many failed login attempts. For security reasons, please wait 15 minutes before trying again.'
+  }
+});

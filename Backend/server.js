@@ -5,10 +5,11 @@ import config from './config/env.js';
 import db from './db/database.js';
 import { dbPool } from './db/pool.js';
 import { helmetMiddleware, enforceHttps, csrfProtection, errorHandler } from './middleware/security.js';
-import { globalLimiter, contactFormLimiter } from './middleware/rateLimiter.js';
-import { requireAdminAuth } from './middleware/auth.js';
+import { globalLimiter, contactFormLimiter, adminLoginLimiter } from './middleware/rateLimiter.js';
+import { requireAdminAuth, timingSafeCompare, generateAdminToken } from './middleware/auth.js';
 import { serverSideCache } from './middleware/cacheMiddleware.js';
 import { sanitizeString, isValidEmail, maskEmail } from './utils/sanitize.js';
+import { sendInquiryNotification } from './utils/mailer.js';
 
 const app = express();
 
@@ -55,7 +56,7 @@ app.use(cors({
 
     return callback(new Error('CORS access denied by security policy.'), false);
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
   maxAge: 86400 // 24 hours preflight cache
@@ -90,13 +91,41 @@ app.get('/api/health', serverSideCache(30), async (req, res) => {
 });
 
 /**
+ * Public Analytics Ping Endpoint
+ * Records anonymous pageview and visitor metadata
+ */
+app.post('/api/analytics/visit', async (req, res) => {
+  try {
+    const { path: visitPath = '/', referrer = '', visitorId = '' } = req.body || {};
+    const ip = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
+    const userAgent = req.headers['user-agent'] || '';
+
+    const visit = await db.recordVisit({
+      ip: String(ip),
+      userAgent: String(userAgent),
+      path: String(visitPath),
+      referrer: String(referrer),
+      visitorId: String(visitorId)
+    });
+
+    return res.status(200).json({
+      success: true,
+      visitId: visit?.id
+    });
+  } catch (error) {
+    // Analytics pings must never crash or throw error to the caller
+    return res.status(200).json({ success: true, note: 'recorded' });
+  }
+});
+
+/**
  * Public Contact Form Submission
  * Security #7: Input sanitization
  * Security #8: XSS neutralization
  * Security #11: Contact form rate limiting (5 req / 15 min)
  * Security #24: Safe logging (masked email)
  */
-app.post('/api/contact', contactFormLimiter, (req, res) => {
+app.post('/api/contact', contactFormLimiter, async (req, res) => {
   try {
     const { name, email, projectType, budget, message } = req.body;
 
@@ -147,16 +176,21 @@ app.post('/api/contact', contactFormLimiter, (req, res) => {
       projectType: cleanProjectType,
       budget: cleanBudget,
       message: cleanMessage,
-      receivedAt: new Date().toISOString()
+      receivedAt: new Date().toISOString(),
+      status: 'unread'
     };
 
-    // Performance #7 & Security #10: Insert with indexed lookup and atomic disk persist
-    db.insertMessage(newMessage);
+    // Performance #7 & Security #10: Insert with indexed lookup and atomic persist (Vercel KV or local)
+    await db.insertMessage(newMessage);
 
-    // Security #24: No expose of user data in server logs (masked email)
+    // Security #24: Safe logging (masked email)
     console.log(`[CONTACT RECEIVED] From: ${cleanName} <${maskEmail(cleanEmail)}> | Type: ${cleanProjectType}`);
 
-    // Respond with minimal safe acknowledgment — never expose other users' data
+    // Send real-time email notification to Neil's Gmail (neilmasion2@gmail.com)
+    sendInquiryNotification(newMessage).catch((err) => {
+      console.error('[MAIL DISPATCH ERROR]', err);
+    });
+
     return res.status(200).json({
       success: true,
       message: 'Thank you! Your message has been received securely. Neil will get back to you shortly.',
@@ -173,30 +207,181 @@ app.post('/api/contact', contactFormLimiter, (req, res) => {
 });
 
 // ==========================================
+// ADMIN AUTHENTICATION
+// ==========================================
+
+/**
+ * Admin Login Endpoint
+ * Verifies username and password using timing-safe comparison
+ * Generates an HMAC-SHA256 signed session token
+ */
+app.post('/api/admin/login', adminLoginLimiter, (req, res) => {
+  try {
+    const { username, password } = req.body || {};
+
+    if (!username || !password) {
+      return res.status(400).json({
+        success: false,
+        error: 'Bad Request',
+        message: 'Username and password are required.'
+      });
+    }
+
+    const expectedUser = config.adminUsername;
+    const expectedPass = config.adminPassword;
+
+    // Security: Timing-safe equality checks
+    const isUserValid = timingSafeCompare(String(username).trim(), expectedUser);
+    const isPassValid = timingSafeCompare(String(password), expectedPass);
+
+    if (!isUserValid || !isPassValid) {
+      return res.status(401).json({
+        success: false,
+        error: 'Authentication Failed',
+        message: 'Invalid username or password.'
+      });
+    }
+
+    // Generate secure session token
+    const token = generateAdminToken({ username: expectedUser });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Admin authentication successful.',
+      token,
+      user: {
+        username: expectedUser,
+        role: 'admin',
+        loginTime: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    console.error('Error during admin login:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal Error',
+      message: 'Failed to process admin authentication.'
+    });
+  }
+});
+
+/**
+ * Admin Session Verification Endpoint
+ */
+app.get('/api/admin/verify', requireAdminAuth, (req, res) => {
+  return res.status(200).json({
+    success: true,
+    user: req.user
+  });
+});
+
+// ==========================================
 // PROTECTED ADMIN ROUTES (Security #4, #5, #6)
 // ==========================================
 
 /**
- * Protected Admin Inquiry List with Pagination & Query Indexing
- * Security #4: Protected admin route
- * Security #5: Bearer token authentication
- * Security #6: Admin permission check
- * Performance #10: Paginate large lists
- * Performance #7: Fast indexed query
+ * Protected Admin Analytics Dashboard Overview
+ * Returns total visits, unique visitors, daily trend chart, devices, and messages count
  */
-app.get('/api/admin/messages', requireAdminAuth, (req, res) => {
-  const { page = 1, limit = 10, email = null } = req.query;
+app.get('/api/admin/analytics', requireAdminAuth, async (req, res) => {
+  try {
+    const analytics = await db.getAnalyticsSummary();
+    return res.json({
+      success: true,
+      data: analytics
+    });
+  } catch (error) {
+    console.error('Error generating analytics summary:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Internal Error',
+      message: 'Failed to compute analytics summary.'
+    });
+  }
+});
 
-  const result = db.getMessages({
+/**
+ * Protected Admin Inquiry List with Search, Filter & Pagination
+ */
+app.get('/api/admin/messages', requireAdminAuth, async (req, res) => {
+  const { page = 1, limit = 20, email = null, search = '', status = 'all' } = req.query;
+
+  const result = await db.getMessages({
     page: parseInt(page, 10),
     limit: parseInt(limit, 10),
-    email
+    email,
+    search: String(search || ''),
+    status: String(status || 'all')
   });
 
   return res.json({
     success: true,
     data: result.items,
     pagination: result.pagination
+  });
+});
+
+/**
+ * Protected Admin Message Status Update (Mark read/unread)
+ */
+app.patch('/api/admin/messages/:id/read', requireAdminAuth, async (req, res) => {
+  const { id } = req.params;
+  const { status = 'read' } = req.body || {};
+
+  const updated = await db.updateMessageStatus(id, status);
+
+  if (!updated) {
+    return res.status(404).json({
+      success: false,
+      error: 'Not Found',
+      message: 'Inquiry not found.'
+    });
+  }
+
+  return res.json({
+    success: true,
+    data: updated
+  });
+});
+
+/**
+ * Protected Admin Delete Inquiry Message
+ */
+app.delete('/api/admin/messages/:id', requireAdminAuth, async (req, res) => {
+  const { id } = req.params;
+  const deleted = await db.deleteMessage(id);
+
+  if (!deleted) {
+    return res.status(404).json({
+      success: false,
+      error: 'Not Found',
+      message: 'Inquiry not found or already deleted.'
+    });
+  }
+
+  return res.json({
+    success: true,
+    message: 'Inquiry successfully deleted.'
+  });
+});
+
+/**
+ * Protected Admin Test Email Dispatch
+ */
+app.post('/api/admin/test-email', requireAdminAuth, async (req, res) => {
+  const result = await sendInquiryNotification({
+    id: `test_${Date.now()}`,
+    name: 'Gmail Test Probe',
+    email: 'probe@neilmasion.dev',
+    projectType: 'Test Diagnostic',
+    budget: 'N/A',
+    message: 'This is a test notification to verify that Gmail delivery to neilmasion2@gmail.com is working properly.',
+    receivedAt: new Date().toISOString()
+  });
+
+  return res.json({
+    success: result.sent,
+    details: result
   });
 });
 
