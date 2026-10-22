@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Navbar } from './components/Navbar';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -12,87 +12,113 @@ import { FAQ } from './components/FAQ';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 import { CookieConsent } from './components/CookieConsent';
+import { VinylPlayer } from './components/VinylPlayer';
 import { Analytics } from '@vercel/analytics/react';
 import { trackVisit } from './utils/visitorTracker';
 
 // Performance: Code-split admin portal & modals to keep initial bundle ultra-lean
-const AdminPortal = lazy(() => import('./components/admin/AdminPortal'));
-const ContactModal = lazy(() => import('./components/ContactModal').then(m => ({ default: m.ContactModal })));
+const AdminPortal    = lazy(() => import('./components/admin/AdminPortal'));
+const ContactModal   = lazy(() => import('./components/ContactModal').then(m => ({ default: m.ContactModal })));
 const PrivacyPolicyModal = lazy(() => import('./components/PrivacyPolicyModal').then(m => ({ default: m.PrivacyPolicyModal })));
-const TermsModal = lazy(() => import('./components/TermsModal').then(m => ({ default: m.TermsModal })));
+const TermsModal     = lazy(() => import('./components/TermsModal').then(m => ({ default: m.TermsModal })));
 
 export function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPath, setCurrentPath] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.location.pathname || '/';
-    }
+    if (typeof window !== 'undefined') return window.location.pathname || '/';
     return '/';
   });
 
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
-  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isTermsOpen,   setIsTermsOpen]   = useState(false);
   const [toast, setToast] = useState({ visible: false, message: '', type: 'success' });
 
-  // Handle route switching & browser history popstate
-  useEffect(() => {
-    const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
-    };
+  // ── Music state (lifted here so LoadingScreen can start it) ──────────
+  const audioRef     = useRef(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
+  useEffect(() => {
+    const audio = new Audio('/bgmusic.mp3');
+    audio.loop   = true;
+    audio.volume = 0.45;
+    audioRef.current = audio;
+    return () => { audio.pause(); audio.src = ''; };
+  }, []);
+
+  /** Called by LoadingScreen's "ENTER SITE" button — guaranteed user gesture */
+  const handleEnter = () => {
+    setIsLoading(false);
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.play()
+      .then(() => setIsMusicPlaying(true))
+      .catch(() => {/* silently ignore */});
+  };
+
+  /** Vinyl pill toggle */
+  const handleMusicToggle = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isMusicPlaying) {
+      audio.pause();
+      setIsMusicPlaying(false);
+    } else {
+      audio.play().then(() => setIsMusicPlaying(true)).catch(() => {});
+    }
+  };
+
+  // ── Routing ───────────────────────────────────────────────────────────
+  useEffect(() => {
+    const handlePopState = () => setCurrentPath(window.location.pathname || '/');
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const navigateTo = (path) => {
-    if (window.location.pathname !== path) {
-      window.history.pushState({}, '', path);
-    }
+    if (window.location.pathname !== path) window.history.pushState({}, '', path);
     setCurrentPath(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isAdminRoute = currentPath === '/admin' || currentPath.startsWith('/admin') || (typeof window !== 'undefined' && window.location.hash === '#admin');
+  const isAdminRoute =
+    currentPath === '/admin' ||
+    currentPath.startsWith('/admin') ||
+    (typeof window !== 'undefined' && window.location.hash === '#admin');
 
   // Track page visit anonymously when visiting public portfolio pages
   useEffect(() => {
-    if (!isAdminRoute) {
-      trackVisit(currentPath);
-    }
+    if (!isAdminRoute) trackVisit(currentPath);
   }, [currentPath, isAdminRoute]);
 
   const showToast = (message, type = 'success') => {
     setToast({ visible: true, message, type });
-    setTimeout(() => {
-      setToast((prev) => ({ ...prev, visible: false }));
-    }, 3500);
+    setTimeout(() => setToast((prev) => ({ ...prev, visible: false })), 3500);
   };
 
-  // If visiting /admin, directly render the Admin Portal
+  // ── Admin Portal ──────────────────────────────────────────────────────
   if (isAdminRoute) {
     return (
       <div className="min-h-screen bg-[#0B0B0E] text-zinc-100 font-sans selection:bg-brand-purple selection:text-white">
-        <Suspense
-          fallback={
-            <div className="min-h-screen flex items-center justify-center bg-[#0B0B0E] text-zinc-400 font-mono text-xs">
-              Loading Admin Portal...
-            </div>
-          }
-        >
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center bg-[#0B0B0E] text-zinc-400 font-mono text-xs">
+            Loading Admin Portal...
+          </div>
+        }>
           <AdminPortal onBackToPortfolio={() => navigateTo('/')} />
         </Suspense>
       </div>
     );
   }
 
+  // ── Public Portfolio ──────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-[#0B0B0E] text-zinc-900 font-sans selection:bg-brand-purple selection:text-white relative">
-      
-      {/* Loading Screen Preloader */}
+
+      {/* Loading Screen — waits for user to click ENTER SITE */}
       <AnimatePresence>
         {isLoading && (
-          <LoadingScreen onLoadingComplete={() => setIsLoading(false)} />
+          <LoadingScreen onEnter={handleEnter} />
         )}
       </AnimatePresence>
 
@@ -146,14 +172,12 @@ export function App() {
                 onShowToast={showToast}
               />
             )}
-
             {isPrivacyOpen && (
               <PrivacyPolicyModal
                 isOpen={isPrivacyOpen}
                 onClose={() => setIsPrivacyOpen(false)}
               />
             )}
-
             {isTermsOpen && (
               <TermsModal
                 isOpen={isTermsOpen}
@@ -172,6 +196,9 @@ export function App() {
 
           {/* Vercel Web Analytics */}
           <Analytics />
+
+          {/* Vinyl Record Player — fixed bottom-right */}
+          <VinylPlayer isPlaying={isMusicPlaying} onToggle={handleMusicToggle} />
         </div>
       )}
     </div>
