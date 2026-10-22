@@ -142,10 +142,10 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
             <div>
               <div className="flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider text-brand-purple-light">
                 <Sparkles className="w-3 h-3" />
-                <span>START A PROJECT</span>
+                <span>New project</span>
               </div>
               <h3 className="font-anton text-xl uppercase tracking-wide text-white mt-0.5">
-                LET&apos;S CREATE SOMETHING GREAT
+                Let&apos;s work together
               </h3>
             </div>
             <button
@@ -165,10 +165,10 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <h4 className="font-anton text-xl uppercase text-white">
-                  MESSAGE DISPATCHED!
+                  You&apos;re all set!
                 </h4>
                 <p className="font-sans text-xs text-zinc-400 max-w-xs mx-auto leading-relaxed">
-                  Thank you for reaching out, {formData.name || 'friend'}. I&apos;ve received your inquiry and will review the details right away.
+                  Thanks, {formData.name || 'friend'} — I&apos;ll take a look and get back to you shortly.
                 </p>
                 <div className="pt-2">
                   <button
@@ -190,7 +190,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
 
                 <div>
                   <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-                    Your Name *
+                    Name
                   </label>
                   <input
                     type="text"
@@ -199,14 +199,14 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="e.g. Alex Rivera"
+                    placeholder="Your name"
                     className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors"
                   />
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-                    Email Address *
+                    Email
                   </label>
                   <input
                     type="email"
@@ -215,7 +215,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="alex@company.com"
+                    placeholder="your@email.com"
                     className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors"
                   />
                 </div>
@@ -223,7 +223,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-                      Commission / Project Type
+                      Project type
                     </label>
                     <select
                       name="projectType"
@@ -242,7 +242,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
 
                   <div>
                     <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-                      Budget / Rate Tier
+                      Budget range
                     </label>
                     <select
                       name="budget"
@@ -260,7 +260,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
 
                 <div>
                   <label className="block text-[11px] font-mono uppercase tracking-wider text-zinc-400 mb-1">
-                    Commission Details / Message *
+                    Message
                   </label>
                   <textarea
                     required
@@ -269,14 +269,14 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                     rows={3}
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell me about your project — what you need (website, graphics, or video), your timeline, and any specific ideas or references you have in mind..."
+                    placeholder="Describe your project, timeline, and any ideas..."
                     className="w-full px-3.5 py-2.5 rounded-none bg-zinc-900 border border-zinc-800 focus:border-brand-purple focus:outline-none text-xs text-white font-sans transition-colors resize-none"
                   ></textarea>
                 </div>
 
                 <div className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
                   <ShieldCheck className="w-3.5 h-3.5 text-brand-purple-light" />
-                  <span>Protected by rate limiting &amp; HTTPS encryption. No data sold.</span>
+                  <span>Your info is safe — encrypted & never shared.</span>
                 </div>
 
                 <button
@@ -292,7 +292,7 @@ export const ContactModal = ({ isOpen, onClose, onShowToast }) => {
                   ) : (
                     <>
                       <Send className="w-3.5 h-3.5" />
-                      <span>SUBMIT PROPOSAL</span>
+                      <span>Send Message</span>
                     </>
                   )}
                 </button>
