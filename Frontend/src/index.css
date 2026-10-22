@@ -48,6 +48,67 @@
   box-shadow: 0 0 50px -10px rgba(112, 59, 247, 0.35);
 }
 
+/* ── Aurora Blob Keyframes & Animations (Pure CSS, GPU-Accelerated) ── */
+@keyframes aurora-blob-1 {
+  0% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(50px, -28px) scale(1.08) rotate(12deg);
+  }
+  66% {
+    transform: translate(-38px, 20px) scale(0.95) rotate(-8deg);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes aurora-blob-2 {
+  0% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(-42px, 32px) scale(0.94) rotate(-15deg);
+  }
+  66% {
+    transform: translate(32px, -24px) scale(1.10) rotate(10deg);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes aurora-blob-3 {
+  0% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(28px, 38px) scale(1.08) rotate(8deg);
+  }
+  66% {
+    transform: translate(-24px, -30px) scale(0.93) rotate(-12deg);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+}
+
+.animate-aurora-1 {
+  animation: aurora-blob-1 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-aurora-2 {
+  animation: aurora-blob-2 23s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-aurora-3 {
+  animation: aurora-blob-3 26s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Smooth transitions */
 * {
   box-sizing: border-box;

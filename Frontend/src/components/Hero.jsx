@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
+import { AuroraBlob } from './AuroraBlob';
 
 export const Hero = ({ onOpenContact }) => {
   const heroRef = useRef(null);
@@ -28,10 +29,13 @@ export const Hero = ({ onOpenContact }) => {
   return (
     <section 
       ref={heroRef}
-      className="relative w-full bg-[#FFFFFF] pt-4 pb-10 md:pt-6 md:pb-14 border-b border-zinc-200"
+      className="relative w-full bg-[#FFFFFF] pt-4 pb-10 md:pt-6 md:pb-14 border-b border-zinc-200 overflow-hidden"
     >
       {/* Subtle background ambient dot grid */}
       <div className="absolute inset-0 bg-[radial-gradient(#e2e4e9_1px,transparent_1px)] [background-size:20px_20px] opacity-70 pointer-events-none" />
+
+      {/* Aurora Blob background animation sitting behind Hero */}
+      <AuroraBlob />
 
       {/* Main Container with generous left/right margins */}
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">

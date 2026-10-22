@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 import { CookieConsent } from './components/CookieConsent';
 import { VinylPlayer } from './components/VinylPlayer';
+import { ParticleNetwork } from './components/ParticleNetwork';
 import { Analytics } from '@vercel/analytics/react';
 import { trackVisit } from './utils/visitorTracker';
 
@@ -125,6 +126,9 @@ export function App() {
       {/* Main Page Layout */}
       {!isLoading && (
         <div className="relative">
+          {/* Global subtle particle network */}
+          <ParticleNetwork />
+
           {/* Sticky Navigation */}
           <Navbar onOpenContact={() => setIsContactOpen(true)} />
 
