@@ -13,18 +13,13 @@ export const LoadingScreen = ({ onEnter }) => {
   ];
   const statusIndex = progress < 30 ? 0 : progress < 65 ? 1 : progress < 90 ? 2 : 3;
 
-  // Progress bar fills up, then smoothly transitions into the site
+  // Progress bar fills up, then awaits user to click ENTER SITE (guaranteeing browser audio autoplay authorization)
   useEffect(() => {
-    let enterTimeout;
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
           setDone(true);
-          // Auto-enter smoothly so visitors never get stuck on a loading screen
-          enterTimeout = setTimeout(() => {
-            onEnter();
-          }, 350);
           return 100;
         }
         const next = prev + Math.floor(Math.random() * 16) + 12;
@@ -34,15 +29,18 @@ export const LoadingScreen = ({ onEnter }) => {
 
     return () => {
       clearInterval(timer);
-      clearTimeout(enterTimeout);
     };
-  }, [onEnter]);
+  }, []);
 
-  // Enter key shortcut once done
+  // Keyboard shortcuts: Escape to skip, Enter / Space to enter once loaded
   useEffect(() => {
-    if (!done) return;
     const handleKey = (e) => {
-      if (e.key === 'Enter') onEnter();
+      if (e.key === 'Escape') {
+        onEnter();
+      } else if (done && (e.key === 'Enter' || e.code === 'Space')) {
+        e.preventDefault();
+        onEnter();
+      }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
