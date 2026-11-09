@@ -85,6 +85,13 @@ export const TechIcon = React.memo(({ name, className = "w-5 h-5" }) => {
           <path d="M12.1 22c3.1 0 2.9-1.3 2.9-1.3l-.03-1.4h-3v-.4h5.8s3.2.3 3.2-3.7-2.8-3.9-2.8-3.9h-1.7v2.4s.1 2.9-2.8 2.9h-4.8s-2.8-.1-2.8 2.8.2 4.6 2.8 4.6h3.2zm1.6-1.6c-.5 0-.9-.4-.9-.9s.4-.9.9-.9.9.4.9.9-.4.9-.9.9z" fill="#FFD43B"/>
         </svg>
       );
+    case 'django':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none">
+          <rect width="24" height="24" rx="4" fill="#092E20"/>
+          <text x="12" y="15.5" fill="#44B78B" fontSize="10" fontWeight="bold" fontFamily="monospace" textAnchor="middle">dj</text>
+        </svg>
+      );
     case 'postgres':
       return (
         <svg className={className} viewBox="0 0 24 24" fill="#336791">

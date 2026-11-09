@@ -46,10 +46,10 @@ export const projects = [
     id: "02",
     title: "eCare: Citizen Portal & Barangay Services",
     subtitle: "Full-Stack Web App",
-    tagline: "Barangay services catalog, PhilSys ID verification & application tracking",
+    tagline: "Barangay services catalog, citizen verification & application tracking",
     category: "web",
     categories: ["web", "app", "ui-ux"],
-    tech: ["React", "Node.js", "Express.js", "Tailwind CSS", "PhilSys ID", "Vercel"],
+    tech: ["React", "Python", "Django", "Tailwind CSS", "Vercel"],
     themeColor: "from-blue-950/40 to-sky-950/60",
     accentColor: "#2563EB",
     cardBg: "#0B1528",
@@ -63,7 +63,7 @@ export const projects = [
       "/assets/ecare/ecare-profile.png",
       "/assets/ecare/ecare-login.png"
     ],
-    description: "A full-stack citizen portal web app for local barangay governance and public services. Features online clearance requests, financial and medical aid tracking, PhilSys National ID verification, appointment scheduling, and incident reporting.",
+    description: "A full-stack citizen portal web app for local barangay governance and public services. Built with React and Python Django, featuring online clearance requests, financial and medical aid tracking, citizen identity verification, appointment scheduling, and incident reporting.",
     liveUrl: "https://ecare-phi.vercel.app/",
     githubUrl: "https://github.com/neilmasion/ecare"
   },
@@ -256,9 +256,10 @@ export const skillsCategories = [
   {
     category: "BACKEND & DATABASE",
     skills: [
+      { name: "Python", icon: "python", level: "Proficient", color: "#3776AB" },
+      { name: "Django", icon: "django", level: "Proficient", color: "#44B78B" },
       { name: "Node.js", icon: "node", level: "Proficient", color: "#5FA04E" },
       { name: "Express.js", icon: "express", level: "Proficient", color: "#FFFFFF" },
-      { name: "Python", icon: "python", level: "Intermediate", color: "#3776AB" },
       { name: "PostgreSQL", icon: "postgres", level: "Proficient", color: "#4169E1" },
       { name: "Neon", icon: "neon", level: "Proficient", color: "#00E599" }
     ]
@@ -295,7 +296,7 @@ export const faqs = [
   },
   {
     question: "What tools and technologies do you use?",
-    answer: "For web design and development, I work with React, Next.js, TailwindCSS, JavaScript, TypeScript, and Vite. On the backend and cloud infrastructure, I use Node.js, Express.js, PostgreSQL, Neon, Cloudflare, and Vercel. For graphic design, I use Figma, Canva, and Photoshop. For video editing, I use CapCut."
+    answer: "For web design and development, I work with React, Next.js, TailwindCSS, JavaScript, TypeScript, and Vite. On the backend and cloud infrastructure, I use Python, Django, Node.js, Express.js, PostgreSQL, Neon, Cloudflare, and Vercel. For graphic design, I use Figma, Canva, and Photoshop. For video editing, I use CapCut."
   },
   {
     question: "Do you have real project experience?",
