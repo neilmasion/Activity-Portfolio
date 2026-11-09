@@ -387,7 +387,7 @@ export const Projects = () => {
                       <img
                         src={imgSrc}
                         alt={`Preview slide ${slideIdx + 1}`}
-                        className="w-full h-full object-contain bg-black/60"
+                        className="w-full h-full object-cover"
                       />
                     </button>
                   ))}
@@ -519,7 +519,7 @@ export const Projects = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setZoomedImage(null)}
-              className="fixed inset-0 bg-black/92 backdrop-blur-md cursor-zoom-out"
+              className="fixed inset-0 bg-black/95 cursor-zoom-out"
             />
 
             {/* Lightbox Modal Window */}
@@ -633,7 +633,7 @@ export const Projects = () => {
                       <img
                         src={imgSrc}
                         alt={`Slide ${sIdx + 1}`}
-                        className="w-full h-full object-contain bg-black/60"
+                        className="w-full h-full object-cover"
                       />
                     </button>
                   ))}
