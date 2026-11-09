@@ -13,21 +13,30 @@ export const LoadingScreen = ({ onEnter }) => {
   ];
   const statusIndex = progress < 30 ? 0 : progress < 65 ? 1 : progress < 90 ? 2 : 3;
 
-  // Progress bar fills up, then stops and waits for the user
+  // Progress bar fills up, then smoothly transitions into the site
   useEffect(() => {
+    let enterTimeout;
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
           setDone(true);
+          // Auto-enter smoothly so visitors never get stuck on a loading screen
+          enterTimeout = setTimeout(() => {
+            onEnter();
+          }, 350);
           return 100;
         }
-        const next = prev + Math.floor(Math.random() * 14) + 8;
+        const next = prev + Math.floor(Math.random() * 16) + 12;
         return next > 100 ? 100 : next;
       });
-    }, 18);
-    return () => clearInterval(timer);
-  }, []);
+    }, 16);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(enterTimeout);
+    };
+  }, [onEnter]);
 
   // Enter key shortcut once done
   useEffect(() => {

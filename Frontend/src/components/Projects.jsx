@@ -170,9 +170,21 @@ export const Projects = () => {
       id="projects"
       className="w-full bg-[#0B0B0E] text-white scroll-mt-16 py-8 sm:py-10 md:py-12 border-b border-zinc-800 relative overflow-hidden select-none"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[280px] bg-brand-purple/15 rounded-full blur-[130px] pointer-events-none" />
-      <div className="absolute top-1/3 left-0 w-64 h-64 bg-brand-purple/10 rounded-full blur-[100px] pointer-events-none" />
+      {/* Background ambient lighting (GPU-optimized radial gradients) */}
+      <div
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[280px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(112, 59, 247, 0.16) 0%, transparent 70%)',
+          transform: 'translateZ(0)',
+        }}
+      />
+      <div
+        className="absolute top-1/3 left-0 w-64 h-64 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, rgba(112, 59, 247, 0.12) 0%, transparent 70%)',
+          transform: 'translateZ(0)',
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         
