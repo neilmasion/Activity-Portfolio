@@ -20,8 +20,14 @@ export const ProcessBanner = () => {
 
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
         
-        {/* Section Header: Page 3 / How I Work */}
-        <div className="mb-10 md:mb-14">
+        {/* Section Header: Page 3 / How I Work with scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-10 md:mb-14"
+        >
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-purple-200 mb-3">
             <span>// 03. HOW I WORK</span>
             <span className="w-8 h-[1px] bg-white/40"></span>
@@ -33,7 +39,7 @@ export const ProcessBanner = () => {
               JUST DESIGN.
             </span>
           </h2>
-        </div>
+        </motion.div>
 
         {/* 4 Process Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 mb-10 sm:mb-14">
@@ -104,8 +110,14 @@ export const ProcessBanner = () => {
           })}
         </div>
 
-        {/* Bottom Highlights (Text only, box removed) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        {/* Bottom Highlights with scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6"
+        >
           {guarantees.map((item, idx) => (
             <div key={idx} className="font-mono">
               <span className="text-purple-200/80 block text-[10px] uppercase tracking-wider mb-1">
@@ -116,7 +128,7 @@ export const ProcessBanner = () => {
               </span>
             </div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

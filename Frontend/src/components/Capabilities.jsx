@@ -22,8 +22,14 @@ export const Capabilities = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
-          {/* Left Column: Heading and Subtext */}
-          <div className="lg:col-span-5">
+          {/* Left Column: Heading and Subtext with scroll reveal */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5"
+          >
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-brand-purple mb-2">
               <span>// 02. COMMISSIONS &amp; SERVICES</span>
               <span className="w-8 h-[1px] bg-brand-purple/40"></span>
@@ -47,15 +53,19 @@ export const Capabilities = () => {
                 <span className="text-zinc-500">Affordable rates for students, Fast revisions, and direct Discord/Email communication.</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Interactive Accordion List */}
+          {/* Right Column: Interactive Accordion List with staggered scroll reveals */}
           <div className="lg:col-span-7 space-y-4">
             {capabilities.map((item, idx) => {
               const isOpen = openId === item.id;
               return (
-                <div
+                <motion.div
                   key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   className={`rounded-none border transition-all duration-300 overflow-hidden ${
                     isOpen
                       ? 'border-brand-purple/50 bg-[#FAF9FE] shadow-lg shadow-purple-500/5'
@@ -111,7 +121,7 @@ export const Capabilities = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>

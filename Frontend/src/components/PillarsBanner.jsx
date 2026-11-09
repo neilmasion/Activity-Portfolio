@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 export const PillarsBanner = () => {
   const pillars = [
@@ -12,7 +13,14 @@ export const PillarsBanner = () => {
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {pillars.map((pillar, idx) => (
-            <div key={idx} className="flex flex-col justify-start">
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.45, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col justify-start"
+            >
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-brand-purple shrink-0 animate-pulse"></span>
                 <h3 className="font-anton text-2xl sm:text-3xl tracking-wide uppercase text-white">
@@ -22,7 +30,7 @@ export const PillarsBanner = () => {
               <p className="font-sans text-xs sm:text-sm text-zinc-400 pl-5 leading-relaxed">
                 {pillar.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

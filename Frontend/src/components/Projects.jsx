@@ -188,8 +188,14 @@ export const Projects = () => {
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
         
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        {/* Section Header with smooth scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+        >
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-brand-purple-light mb-2">
               <span>// 01. SELECTED WORKS</span>
@@ -215,10 +221,16 @@ export const Projects = () => {
               <ExternalLink className="w-3.5 h-3.5 text-brand-purple-light" />
             </a>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Filter Pills */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar">
+        {/* Filter Pills with staggered reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.45, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-2 overflow-x-auto pb-3 mb-6 no-scrollbar"
+        >
           {filters.map((filter) => {
             const isActive = activeFilter === filter.value;
             return (
@@ -236,7 +248,7 @@ export const Projects = () => {
               </button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* ── 3D Coverflow Carousel Stage ───────────────────────── */}
         <div className="relative w-full py-2 sm:py-4 overflow-hidden">

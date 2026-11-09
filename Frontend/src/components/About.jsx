@@ -16,11 +16,17 @@ export const About = () => {
     <section id="skills" className="w-full bg-[#FFFFFF] text-zinc-900 scroll-mt-16 pt-14 pb-20 md:pt-20 md:pb-24 border-b border-zinc-200 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14">
         
-        {/* Top Half: Cutout Photo & Narrative Bio */}
+        {/* Top Half: Cutout Photo & Narrative Bio with scroll entry */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-10 lg:mb-14">
           
-          {/* Left Column: Neil's Cutout Image positioned as in reference */}
-          <div className="lg:col-span-5 relative flex justify-center lg:justify-start items-center">
+          {/* Left Column: Neil's Cutout Image with smooth left-slide entrance */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 relative flex justify-center lg:justify-start items-center"
+          >
             <div className="relative w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[450px] lg:max-w-none">
               <img
                 src={aboutNeilImg}
@@ -31,10 +37,16 @@ export const About = () => {
               {/* Bottom fade to blend seamlessly into white background */}
               <div className="absolute bottom-0 inset-x-0 h-20 sm:h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Bio Narrative */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
+          {/* Right Column: Bio Narrative with smooth right-slide entrance */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 flex flex-col justify-center"
+          >
             {/* Tag / Category */}
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-purple mb-3">
               <span className="w-2 h-2 bg-[#FF3E3E] inline-block shrink-0"></span>
@@ -102,12 +114,18 @@ export const About = () => {
                 WHEN I TAKE ON A PROJECT, I DON’T JUST DELIVER IT — I MAKE SURE IT STANDS OUT.
               </span>
             </div>
-          </div>
+          </motion.div>
 
         </div>
 
-        {/* Bottom Half: Skills Group (Hidden by default, reveals on user interest) */}
-        <div className="pt-6 border-t border-zinc-100">
+        {/* Bottom Half: Skills Group with scroll entrance */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="pt-6 border-t border-zinc-100"
+        >
           <button
             onClick={() => setShowSkills(!showSkills)}
             className="group w-full flex items-center justify-between p-4 sm:p-5 rounded-none bg-[#F8F8FB] hover:bg-white border border-zinc-200 hover:border-brand-purple/40 hover:shadow-sm transition-all duration-300 text-left"
@@ -205,7 +223,7 @@ export const About = () => {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
 
       </div>
     </section>

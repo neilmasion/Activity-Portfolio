@@ -16,8 +16,14 @@ export const FAQ = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
-          {/* Left Column */}
-          <div className="lg:col-span-5">
+          {/* Left Column with scroll reveal */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5"
+          >
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-brand-purple mb-2">
               <span>// 05. GOT QUERIES?</span>
               <span className="w-8 h-[1px] bg-brand-purple/40"></span>
@@ -46,15 +52,19 @@ export const FAQ = () => {
                 ASK A SPECIFIC QUESTION &rarr;
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Column: Accordion list */}
+          {/* Right Column: Accordion list with staggered scroll reveals */}
           <div className="lg:col-span-7 space-y-3">
             {faqs.map((faq, idx) => {
               const isOpen = openIndex === idx;
               return (
-                <div
+                <motion.div
                   key={idx}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.42, delay: idx * 0.07, ease: [0.22, 1, 0.36, 1] }}
                   className={`rounded-none border transition-all duration-300 overflow-hidden ${
                     isOpen
                       ? 'border-brand-purple/40 bg-[#FAF9FE] shadow-sm'
@@ -93,7 +103,7 @@ export const FAQ = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>

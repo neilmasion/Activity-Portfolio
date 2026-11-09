@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ArrowUp, ArrowUpRight, Copy, Check, Shield } from 'lucide-react';
 import { TechIcon } from './TechIcons';
 import { personalInfo } from '../data/portfolioData';
@@ -22,8 +23,14 @@ export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms,
   return (
     <footer id="contact" className="w-full bg-[#08080A] text-white scroll-mt-16 pt-16 pb-12 border-t border-zinc-800/80 relative overflow-hidden">
       
-      {/* Background glow behind text */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-purple/15 rounded-full blur-[120px] pointer-events-none" />
+      {/* Background glow behind text (zero blur computation overhead) */}
+      <div
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(112, 59, 247, 0.16) 0%, transparent 70%)',
+          transform: 'translateZ(0)',
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-14 relative z-10">
         
@@ -33,8 +40,14 @@ export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms,
           <span className="w-8 h-[1px] bg-brand-purple/40"></span>
         </div>
 
-        {/* Big Anton Callout Headline */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 pb-12 border-b border-zinc-800">
+        {/* Big Anton Callout Headline with scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12 pb-12 border-b border-zinc-800"
+        >
           <div>
             <h2 className="font-anton text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight uppercase leading-[0.9] text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-purple-300 drop-shadow-sm">
               NEED A WEBSITE, GRAPHICS, OR VIDEO EDIT?
@@ -62,10 +75,16 @@ export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms,
               <span>{copied ? 'COPIED TO CLIPBOARD' : 'COPY EMAIL'}</span>
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Middle Quick Links & Socials */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-xs font-mono">
+        {/* Middle Quick Links & Socials with scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 text-xs font-mono"
+        >
           <div>
             <span className="text-zinc-500 uppercase tracking-widest block mb-3">DIRECT INQUIRIES</span>
             <a 
@@ -118,10 +137,16 @@ export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms,
               <ArrowUp className="w-3.5 h-3.5" />
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Bottom Credits & Legal Links */}
-        <div className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
+        {/* Bottom Credits & Legal Links with scroll reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-20px' }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500"
+        >
           <div className="flex items-center gap-2">
             <span className="font-anton text-base text-zinc-300">NM.</span>
             <span>&copy; 2026 NEIL MASION. ALL RIGHTS RESERVED.</span>
@@ -151,7 +176,7 @@ export const Footer = ({ onOpenContact, onShowToast, onOpenPrivacy, onOpenTerms,
               <span>ADMIN</span>
             </button>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </footer>
