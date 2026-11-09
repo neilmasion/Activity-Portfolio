@@ -113,6 +113,20 @@ export const TechIcon = React.memo(({ name, className = "w-5 h-5" }) => {
           <path d="M12 5l7 12H5l7-12z" fill="#FFFFFF"/>
         </svg>
       );
+    case 'neon':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none">
+          <rect width="24" height="24" rx="4" fill="#0D1117" />
+          <path d="M6.5 6.5h2.2l6.2 7.8V6.5h2.6v11h-2.2l-6.2-7.8v7.8H6.5v-11z" fill="#00E599"/>
+        </svg>
+      );
+    case 'cloudflare':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none">
+          <path d="M18.23 11.25a5.2 5.2 0 0 0-5.18-4.58c-2.18 0-4.04 1.35-4.78 3.28-.61-.31-1.3-.49-2.03-.49-2.34 0-4.24 1.9-4.24 4.24 0 .35.04.7.12 1.03h16.48a3.44 3.44 0 0 0 3.44-3.44c0-1.83-1.42-3.32-3.23-3.42l-.58-.02v-.6z" fill="#F38020"/>
+          <path d="M19.78 14.73h-8.05c-.17 0-.32-.12-.35-.29a2.76 2.76 0 0 1 .45-1.92c.6-.82 1.57-1.31 2.59-1.31 1.52 0 2.82 1.05 3.12 2.51.04.2.19.34.4.34h1.84c.75 0 1.36.61 1.36 1.36 0 .72-.56 1.31-1.28 1.35l-.08-.04z" fill="#FAAD3F"/>
+        </svg>
+      );
     case 'aws':
       return (
         <svg className={className} viewBox="0 0 24 24" fill="none">

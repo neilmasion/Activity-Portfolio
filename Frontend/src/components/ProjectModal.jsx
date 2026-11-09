@@ -196,7 +196,7 @@ export const ProjectModal = ({ project, onClose }) => {
                   rel="noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 sm:py-2.5 px-3 sm:px-3.5 rounded-none bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-sm"
                 >
-                  <span>OPEN DEMO</span>
+                  <span>{project.category === 'web' ? 'LIVE DEMO' : 'OPEN DEMO'}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
