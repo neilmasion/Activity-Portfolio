@@ -69,12 +69,12 @@ export const projects = [
   },
   {
     id: "03",
-    title: "GIYA: Smart Cane Companion & Auth UI",
-    subtitle: "IoT Mobile App Design",
-    tagline: "Caregiver verification, live GPS & emergency SOS alerts",
+    title: "GIYA: Smart Cane Companion App",
+    subtitle: "React Native Mobile App & IoT",
+    tagline: "Caregiver PIN access, real-time GPS telemetry & emergency SOS alerts",
     category: "app",
-    categories: ["web", "app", "ui-ux"],
-    tech: ["Figma", "UI/UX Design", "Mobile App", "Design System"],
+    categories: ["app", "web", "ui-ux"],
+    tech: ["React Native", "Expo", "TypeScript", "Firebase", "Node.js", "Figma"],
     themeColor: "from-orange-950/40 to-stone-900/60",
     accentColor: "#FA8C54",
     cardBg: "#F7ECE5",
@@ -86,10 +86,10 @@ export const projects = [
       "/assets/giya/Shot-1.webp",
       "/assets/giya/Shot-2.webp"
     ],
-    description: "A mobile companion app interface for an IoT smart cane system. Features caregiver PIN verification, live GPS route tracking, and instant emergency SOS alerts.",
+    description: "A cross-platform mobile companion app built with React Native and Expo for caregivers to monitor, track, and support visually impaired individuals using the Giya Smart Cane. Features caregiver phone & PIN authentication, cane hardware pairing, live GPS route telemetry, and instant emergency SOS alerts backed by Google Firebase.",
     figmaUrl: "https://www.figma.com/design/X8kgkMKNRJ68hrFIAya2LF/GIYA-Authentication-UI?node-id=0-1&t=RnzyFHbT3CFO3g10-1",
-    liveUrl: "https://www.figma.com/design/X8kgkMKNRJ68hrFIAya2LF/GIYA-Authentication-UI?node-id=0-1&t=RnzyFHbT3CFO3g10-1",
-    githubUrl: null
+    liveUrl: "https://github.com/neilmasion/Giya-Smart-Cane",
+    githubUrl: "https://github.com/neilmasion/Giya-Smart-Cane"
   },
   {
     id: "04",
@@ -241,11 +241,12 @@ export const processSteps = [
 
 export const skillsCategories = [
   {
-    category: "FRONTEND",
+    category: "FRONTEND & MOBILE",
     skills: [
       { name: "HTML", icon: "html", level: "Expert", color: "#E34F26" },
       { name: "CSS", icon: "css", level: "Expert", color: "#1572B6" },
       { name: "React", icon: "react", level: "Expert", color: "#61DAFB" },
+      { name: "React Native", icon: "react", level: "Proficient", color: "#61DAFB" },
       { name: "TailwindCSS", icon: "tailwind", level: "Expert", color: "#06B6D4" },
       { name: "Javascript", icon: "js", level: "Expert", color: "#F7DF1E" },
       { name: "TypeScript", icon: "ts", level: "Advanced", color: "#3178C6" },
@@ -260,6 +261,7 @@ export const skillsCategories = [
       { name: "Django", icon: "django", level: "Proficient", color: "#44B78B" },
       { name: "Node.js", icon: "node", level: "Proficient", color: "#5FA04E" },
       { name: "Express.js", icon: "express", level: "Proficient", color: "#FFFFFF" },
+      { name: "Firebase", icon: "firebase", level: "Proficient", color: "#FFA000" },
       { name: "PostgreSQL", icon: "postgres", level: "Proficient", color: "#4169E1" },
       { name: "Neon", icon: "neon", level: "Proficient", color: "#00E599" }
     ]
@@ -296,7 +298,7 @@ export const faqs = [
   },
   {
     question: "What tools and technologies do you use?",
-    answer: "For web design and development, I work with React, Next.js, TailwindCSS, JavaScript, TypeScript, and Vite. On the backend and cloud infrastructure, I use Python, Django, Node.js, Express.js, PostgreSQL, Neon, Cloudflare, and Vercel. For graphic design, I use Figma, Canva, and Photoshop. For video editing, I use CapCut."
+    answer: "For web and mobile development, I work with React, React Native, Expo, Next.js, TailwindCSS, JavaScript, TypeScript, and Vite. On the backend and cloud infrastructure, I use Python, Django, Node.js, Express.js, Firebase, PostgreSQL, Neon, Cloudflare, and Vercel. For graphic design, I use Figma, Canva, and Photoshop. For video editing, I use CapCut."
   },
   {
     question: "Do you have real project experience?",

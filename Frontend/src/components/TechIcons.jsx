@@ -120,6 +120,14 @@ export const TechIcon = React.memo(({ name, className = "w-5 h-5" }) => {
           <path d="M12 5l7 12H5l7-12z" fill="#FFFFFF"/>
         </svg>
       );
+    case 'firebase':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none">
+          <path d="M4.6 17.5L7.2 3.1c.1-.4.6-.5.9-.2l3.4 6.3-6.9 8.3z" fill="#FFA000"/>
+          <path d="M11.5 9.2l2.3-4.4c.2-.4.8-.4 1 0l4.6 12.7-7.9-8.3z" fill="#F57C00"/>
+          <path d="M3.7 18.2l7.8 4.4c.3.2.7.2 1 0l7.8-4.4-2.8-7.7-13.8 7.7z" fill="#FFCA28"/>
+        </svg>
+      );
     case 'neon':
       return (
         <svg className={className} viewBox="0 0 24 24" fill="none">

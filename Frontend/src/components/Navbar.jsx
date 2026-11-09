@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, Download } from 'lucide-react';
 
 export const Navbar = ({ onOpenContact }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,14 +39,18 @@ export const Navbar = ({ onOpenContact }) => {
             ))}
           </nav>
 
-          {/* "Commission" Button without border radius */}
-          <button
-            onClick={onOpenContact}
+          {/* Download Resume Button */}
+          <a
+            href="/resume.pdf"
+            download="Neil_Masion_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-brand-purple hover:bg-brand-purple-dark text-white font-mono text-xs uppercase tracking-wider transition-all duration-200 shadow-sm rounded-none hover:-translate-y-0.5 active:translate-y-0"
+            aria-label="Download Resume"
           >
-            <span>Let's talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </button>
+            <Download className="w-3.5 h-3.5" />
+            <span>Download Resume</span>
+          </a>
         </div>
 
         {/* Mobile menu toggle */}
@@ -83,16 +87,18 @@ export const Navbar = ({ onOpenContact }) => {
               </a>
             ))}
             <div className="pt-2">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenContact();
-                }}
+              <a
+                href="/resume.pdf"
+                download="Neil_Masion_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center justify-center gap-1.5 py-3 bg-brand-purple text-white font-mono text-xs uppercase tracking-wider rounded-none shadow-sm"
+                aria-label="Download Resume"
               >
-                <span>Let's talk</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Resume</span>
+              </a>
             </div>
           </motion.div>
         )}
