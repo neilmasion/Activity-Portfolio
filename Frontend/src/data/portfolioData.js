@@ -243,46 +243,46 @@ export const skillsCategories = [
   {
     category: "FRONTEND & MOBILE",
     skills: [
-      { name: "HTML", icon: "html", level: "Expert", color: "#E34F26" },
-      { name: "CSS", icon: "css", level: "Expert", color: "#1572B6" },
-      { name: "React", icon: "react", level: "Expert", color: "#61DAFB" },
-      { name: "React Native", icon: "react", level: "Proficient", color: "#61DAFB" },
-      { name: "TailwindCSS", icon: "tailwind", level: "Expert", color: "#06B6D4" },
-      { name: "Javascript", icon: "js", level: "Expert", color: "#F7DF1E" },
-      { name: "TypeScript", icon: "ts", level: "Advanced", color: "#3178C6" },
-      { name: "Next.js", icon: "next", level: "Advanced", color: "#FFFFFF" },
-      { name: "Vite", icon: "vite", level: "Expert", color: "#646CFF" }
+      { name: "HTML", icon: "html", color: "#E34F26" },
+      { name: "CSS", icon: "css", color: "#1572B6" },
+      { name: "React", icon: "react", color: "#61DAFB" },
+      { name: "React Native", icon: "react", color: "#61DAFB" },
+      { name: "TailwindCSS", icon: "tailwind", color: "#06B6D4" },
+      { name: "Javascript", icon: "js", color: "#F7DF1E" },
+      { name: "TypeScript", icon: "ts", color: "#3178C6" },
+      { name: "Next.js", icon: "next", color: "#FFFFFF" },
+      { name: "Vite", icon: "vite", color: "#646CFF" }
     ]
   },
   {
     category: "BACKEND & DATABASE",
     skills: [
-      { name: "Python", icon: "python", level: "Proficient", color: "#3776AB" },
-      { name: "Django", icon: "django", level: "Proficient", color: "#44B78B" },
-      { name: "Node.js", icon: "node", level: "Proficient", color: "#5FA04E" },
-      { name: "Express.js", icon: "express", level: "Proficient", color: "#FFFFFF" },
-      { name: "Firebase", icon: "firebase", level: "Proficient", color: "#FFA000" },
-      { name: "PostgreSQL", icon: "postgres", level: "Proficient", color: "#4169E1" },
-      { name: "Neon", icon: "neon", level: "Proficient", color: "#00E599" }
+      { name: "Python", icon: "python", color: "#3776AB" },
+      { name: "Django", icon: "django", color: "#44B78B" },
+      { name: "Node.js", icon: "node", color: "#5FA04E" },
+      { name: "Express.js", icon: "express", color: "#FFFFFF" },
+      { name: "Firebase", icon: "firebase", color: "#FFA000" },
+      { name: "PostgreSQL", icon: "postgres", color: "#4169E1" },
+      { name: "Neon", icon: "neon", color: "#00E599" }
     ]
   },
   {
     category: "CLOUD & DEVOPS",
     skills: [
-      { name: "Git", icon: "git", level: "Expert", color: "#F05032" },
-      { name: "GitHub", icon: "github", level: "Expert", color: "#FFFFFF" },
-      { name: "Cloudflare", icon: "cloudflare", level: "Proficient", color: "#F38020" },
-      { name: "Vercel", icon: "vercel", level: "Expert", color: "#FFFFFF" },
-      { name: "AWS", icon: "aws", level: "Intermediate", color: "#FF9900" }
+      { name: "Git", icon: "git", color: "#F05032" },
+      { name: "GitHub", icon: "github", color: "#FFFFFF" },
+      { name: "Cloudflare", icon: "cloudflare", color: "#F38020" },
+      { name: "Vercel", icon: "vercel", color: "#FFFFFF" },
+      { name: "AWS", icon: "aws", color: "#FF9900" }
     ]
   },
   {
     category: "DESIGN & VIDEO EDIT TOOLS",
     skills: [
-      { name: "Figma", icon: "figma", level: "Advanced", color: "#F24E1E" },
-      { name: "Canva", icon: "canva", level: "Expert", color: "#00C4CC" },
-      { name: "Photoshop", icon: "ps", level: "Intermediate", color: "#31A8FF" },
-      { name: "CapCut", icon: "capcut", level: "Advanced", color: "#00E5FF" }
+      { name: "Figma", icon: "figma", color: "#F24E1E" },
+      { name: "Canva", icon: "canva", color: "#00C4CC" },
+      { name: "Photoshop", icon: "ps", color: "#31A8FF" },
+      { name: "CapCut", icon: "capcut", color: "#00E5FF" }
     ]
   }
 ];
